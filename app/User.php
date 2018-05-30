@@ -16,7 +16,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password',
-        'contact_no', 'role_id',
+        'contact_no', 'role_id', 'address',
     ];
 
     /**
@@ -27,4 +27,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function transactions() {
+        return $this->hasMany('App\Transaction');
+    }
 }

@@ -11,11 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
 
 Auth::routes();
+
+Route::get('/', 'Auth\LoginController@index')->name('');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -30,13 +32,24 @@ Route::post('/update_image', 'ProductsController@updateImage')->name('update_ima
 
 // //shop
 Route::get('/add-to-cart/{id}', [
-	'uses' => 'ProductsController@getAddToCart',
+	'uses' => 'ShopController@getAddToCart',
 	'as' => 'product.addToCart'
 ]);
 
 Route::get('/shopping-cart', [
-	'uses' => 'ProductsController@getCart',
+	'uses' => 'ShopController@getCart',
 	'as' => 'product.shoppingCart'
+]);
+
+Route::get('/checkout', [
+	'uses' => 'ShopController@getCheckout',
+	'as' => 'checkout',
+	'middleware' => 'auth'
+]);
+
+Route::post('/checkout', [
+	'uses' => 'ShopController@saveOrder',
+	'as' => 'checkout'
 ]);
 
 Route::group(['prefix' => 'user'], function() {

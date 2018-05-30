@@ -11,7 +11,7 @@ class CategoriesController extends Controller
 {   
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth');  
     }
     /**
      * Display a listing of the resource.
@@ -21,9 +21,15 @@ class CategoriesController extends Controller
     public function index()
     {
         //
-        $categories = Category::whereNull('deleted_at')
+        if (Auth::user()->role_id == 1) {
+
+            $categories = Category::whereNull('deleted_at')
                             ->get();
-        return view('categories.index', ['categories' => $categories]);
+            //dd($categories);
+            return view('categories.index', ['categories' => $categories]);
+            
+        }
+        return back();
     }
 
     /**
@@ -45,16 +51,21 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
-        $category = Category::create([
-                        'name' => $request['name'],
-                        'description' => $request['description'],
-                        'user_id' => Auth::user()->id,
-                    ]);
+        if (Auth::user()->role_id == 1) {
 
-        if ($category) {
-            return back()->with('success','Category added successfully');
+            $category = Category::create([
+                            'name' => $request['name'],
+                            'description' => $request['description'],
+                            'user_id' => Auth::user()->id,
+                        ]);
+
+            if ($category) {
+                return back()->with('success','Category added successfully');
+            }
+            return back()->with('errors','Error adding category');
+
         }
-        return back()->with('errors','Error adding category');
+        return back();
 
     }
 
@@ -78,8 +89,11 @@ class CategoriesController extends Controller
     public function edit(Category $category)
     {
         //
-        $findCategory = Category::find($category->id);
-        return view('categories.edit', ['category' => $category]);
+        if (Auth::user()->role_id == 1) {
+            $findCategory = Category::find($category->id);
+            return view('categories.edit', ['category' => $category]);
+        }
+        return back();
     }
 
     /**
@@ -92,16 +106,19 @@ class CategoriesController extends Controller
     public function update(Request $request, Category $category)
     {
         //
-        $updateCategory = Category::where('id', $category->id)
-                        ->update([
-                            'name' => $request['name'],
-                            'description' => $request['description'],
-                        ]);
+        if (Auth::user()->role_id == 1) {
+            $updateCategory = Category::where('id', $category->id)
+                            ->update([
+                                'name' => $request['name'],
+                                'description' => $request['description'],
+                            ]);
 
-        if ($updateCategory) {
-            return back()->with('success','Category updated successfully');
+            if ($updateCategory) {
+                return back()->with('success','Category updated successfully');
+            }
+            return back()->with('errors','Error updating category');
         }
-        return back()->with('errors','Error updating category');
+        return back();
     }
 
     /**
@@ -113,11 +130,14 @@ class CategoriesController extends Controller
     public function destroy(Category $category)
     {
         //
-        $findCategory = Category::find($category->id);
+        if (Auth::user()->role_id == 1) {
+            $findCategory = Category::find($category->id);
 
-        if ($findCategory->delete()) {
-            return back()->with('success' , 'Category deleted successfully');
+            if ($findCategory->delete()) {
+                return back()->with('success' , 'Category deleted successfully');
+            }
+            return back()->withInput()->with('errors', 'Error deleting category');
         }
-        return back()->withInput()->with('errors', 'Error deleting category');
+        return back();
     }
 }

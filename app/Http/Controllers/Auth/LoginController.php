@@ -25,6 +25,10 @@ class LoginController extends Controller
      *
      * @var string
      */
+    public function index() {
+        return redirect()->route('login');
+    }
+
     protected $redirectTo = '/home';
 
     /**

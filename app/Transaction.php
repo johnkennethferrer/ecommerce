@@ -9,7 +9,15 @@ class Transaction extends Model
     //
     protected $fillable = [
     	'user_id',
-    	'product_id',
-    	'status'
+    	'status',
+    	'total_amount'
     ];	
+
+    public function orders() {
+        return $this->hasMany('App\Orderlist');
+    }
+
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
 }

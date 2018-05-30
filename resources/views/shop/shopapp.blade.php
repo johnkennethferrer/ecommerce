@@ -36,24 +36,21 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
                     <ul class="navbar-nav m-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/shop">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="product.html">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="cart.html">Cart</a>
+                            <a class="nav-link" href="/shop">Products</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Contact</a>
                         </li>
                         @if(Auth::check())
                             <li class="nav-item">
+                                <a class="nav-link">{{ Auth::user()->name }}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/user/customer_logout">Logout</a>
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/customer_login">Login</a>
+                                <a class="nav-link" href="/login">Login</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/user/customer_register">Sign up</a>

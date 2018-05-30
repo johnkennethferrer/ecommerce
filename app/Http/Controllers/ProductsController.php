@@ -12,10 +12,10 @@ use Session;
 
 class ProductsController extends Controller
 {   
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,17 +24,20 @@ class ProductsController extends Controller
     public function index()
     {
         //
-        $products = Product::whereNull('deleted_at')
-                            ->get();
+        if (Auth::user()->role_id == 1) {
+            $products = Product::whereNull('deleted_at')
+                                ->get();
 
-        $categories = Category::whereNull('deleted_at')
-                            ->get();
+            $categories = Category::whereNull('deleted_at')
+                                ->get();
 
-        $trashProduct = DB::table('products')
-                            ->whereNotNull('deleted_at')
-                            ->get();
+            $trashProduct = DB::table('products')
+                                ->whereNotNull('deleted_at')
+                                ->get();
 
-        return view('products.index', ['products' => $products, 'categories' => $categories, 'trashedProduct' => $trashProduct]);
+            return view('products.index', ['products' => $products, 'categories' => $categories, 'trashedProduct' => $trashProduct]);
+        }
+        return back();
     }
 
     /**
@@ -56,34 +59,51 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         //
-        if ($request->hasFile('image')) {
-                
-            $filename = $request->file('image')->getClientOriginalName(); // get the original name
-            $path = $request->file('image')->storeAs('public', $filename); // store the new image to the store/public
+        if (Auth::user()->role_id == 1) {
 
-                if ($path) {
-                    $insertProduct = Product::create([
-                                        'user_id' => Auth::user()->id,
-                                        'name' => $request['name'],
-                                        'description' => $request['description'],
-                                        'stock' => $request['stock'],
-                                        'price' => $request['price'],
-                                        'category_id' => $request['category'],
-                                        'image' => $filename,
-                                    ]);
+            if ($request->hasFile('image')) {
+                    
+                $filename = $request->file('image')->getClientOriginalName(); // get the original name
+                $path = $request->file('image')->storeAs('public', $filename); // store the new image to the store/public
 
-                    if ($insertProduct) {
-                        return back()->with('success','Product added successfully');
+                    if ($path) {
+                        $insertProduct = Product::create([
+                                            'user_id' => Auth::user()->id,
+                                            'name' => $request['name'],
+                                            'description' => $request['description'],
+                                            'stock' => $request['stock'],
+                                            'price' => $request['price'],
+                                            'category_id' => $request['category'],
+                                            'image' => $filename,
+                                        ]);
+
+                        if ($insertProduct) {
+                            return back()->with('success','Product added successfully');
+                        }
+                        return back()->with('errors','Error adding product');
+
                     }
-                    return back()->with('errors','Error adding product');
 
+            }
+            else
+            {
+                $insertProduct = Product::create([
+                                    'user_id' => Auth::user()->id,
+                                    'name' => $request['name'],
+                                    'description' => $request['description'],
+                                    'stock' => $request['stock'],
+                                    'price' => $request['price'],
+                                    'category_id' => $request['category'],
+                                ]);
+
+                if ($insertProduct) {
+                    return back()->with('success','Product added successfully');
                 }
+                return back()->with('errors','Error adding product');
+            }
 
         }
-        else
-        {
-            return "No file selected.";
-        }
+        return back();
         
     }
 
@@ -108,11 +128,15 @@ class ProductsController extends Controller
     public function edit(Product $product)
     {
         //
-        $findProduct = Product::find($product->id);
+        if (Auth::user()->role_id == 1) {
 
-        $selectCategory = Category::where('id', "!=", $findProduct->category_id)
-                                ->get();
-        return view('products.edit', ['product' => $findProduct, 'categories' => $selectCategory]);  
+            $findProduct = Product::find($product->id);
+
+            $selectCategory = Category::where('id', "!=", $findProduct->category_id)
+                                    ->get();
+            return view('products.edit', ['product' => $findProduct, 'categories' => $selectCategory]); 
+        }
+        return back(); 
     }
 
     /**
@@ -125,18 +149,21 @@ class ProductsController extends Controller
     public function update(Request $request, Product $product)
     {
         //
-        $updateProduct = Product::where('id',$product->id)
-                                ->update([
-                                    'name' => $request['name'],
-                                    'category_id' => $request['category'],
-                                    'price' => $request['price'],
-                                    'stock' => $request['stock'],
-                                    'description' => $request['description']
-                                ]);
-        if ($updateProduct) {
-            return back()->with('success','Product updated successfully.');
+        if (Auth::user()->role_id == 1) {
+            $updateProduct = Product::where('id',$product->id)
+                                    ->update([
+                                        'name' => $request['name'],
+                                        'category_id' => $request['category'],
+                                        'price' => $request['price'],
+                                        'stock' => $request['stock'],
+                                        'description' => $request['description']
+                                    ]);
+            if ($updateProduct) {
+                return back()->with('success','Product updated successfully.');
+            }
+            return back()->with('errors','Error updating product.');
         }
-        return back()->with('errors','Error updating product.');
+        return back(); 
     }
 
     /**
@@ -148,91 +175,81 @@ class ProductsController extends Controller
     public function destroy(Product $product)
     {
         //
-        if (Product::find($product->id)->delete()) {
-            return back()->with('success','Product deleted successfully.');
+        if (Auth::user()->role_id == 1) {
+            if (Product::find($product->id)->delete()) {
+                return back()->with('success','Product deleted successfully.');
+            }
+            return back()->with('errors','Error deleting product.');
         }
-        return back()->with('errors','Error deleting product.');
+        return back(); 
 
     }
 
     public function updateImage(Request $request)
     {
-        if ($request->hasFile('uploadImage')) { // if not empty the post file
+        if (Auth::user()->role_id == 1) {
 
-                $productId = $request->input('productId'); // get the id of employee
-                $getImage = Product::find($productId); // get the data of employee
+            if ($request->hasFile('uploadImage')) { // if not empty the post file
 
-                $imageName = $getImage->image; // get the avatar name
+                    $productId = $request->input('productId'); // get the id of employee
+                    $getImage = Product::find($productId); // get the data of employee
 
-                    if ($imageName == null) { // if null the avatar column on db / no existing image
+                    $imageName = $getImage->image; // get the avatar name
 
-                        $filename = $request->file('uploadImage')->getClientOriginalName(); // get the orignal name of image
-                        $path = $request->file('uploadImage')->storeAs('public', $filename); // store the image to store/app/public
+                        if ($imageName == null) { // if null the avatar column on db / no existing image
 
-                            if ($path) { // if success of storing the image to directory
-                                $fileSave = Product::where('id', $productId) // save the name of image to the database
-                                                ->update([
-                                                    'image' => $filename
-                                                ]);
+                            $filename = $request->file('uploadImage')->getClientOriginalName(); // get the orignal name of image
+                            $path = $request->file('uploadImage')->storeAs('public', $filename); // store the image to store/app/public
 
-                                if ($fileSave) { // if success of saving to the database
-                                    return back()->with('success' , 'Product image updated successfully');
-                                }
+                                if ($path) { // if success of storing the image to directory
+                                    $fileSave = Product::where('id', $productId) // save the name of image to the database
+                                                    ->update([
+                                                        'image' => $filename
+                                                    ]);
 
-                                return back()->withInput()->with('errors', 'Error update product image (Saving the image name to the database)'); // else not success of saving
-                            }
-
-                            return back()->withInput()->with('errors', 'Error update product image (Storing the image to the directory)'); // else not success of storing to directory
-
-                    } else { // if not null the avatar column on db / and has a existing image
-                            
-                        if (Storage::delete('public/'.$imageName)) { // delete the existing image in the store folder
-
-                            $filename = $request->file('uploadImage')->getClientOriginalName(); // get the original name
-                            $path = $request->file('uploadImage')->storeAs('public', $filename); // store the new image to the store/public
-
-                                if ($path) { // if success of storing the directory
-                                    $fileSave = Product::where('id', $productId) // update to the database the new name db
-                                                ->update([
-                                                    'image' => $filename
-                                                ]);
-
-                                    if ($fileSave) { // if success of updating new name in db
+                                    if ($fileSave) { // if success of saving to the database
                                         return back()->with('success' , 'Product image updated successfully');
                                     }
 
-                                    return back()->withInput()->with('errors', 'Error update product image (Saving the image name to the database)'); // else failed updating to db
+                                    return back()->withInput()->with('errors', 'Error update product image (Saving the image name to the database)'); // else not success of saving
                                 }
 
-                                return back()->withInput()->with('errors', 'Error update product image (Storing the new image to the directory)'); // failed to storing to directory
+                                return back()->withInput()->with('errors', 'Error update product image (Storing the image to the directory)'); // else not success of storing to directory
+
+                        } else { // if not null the avatar column on db / and has a existing image
+                                
+                            if (Storage::delete('public/'.$imageName)) { // delete the existing image in the store folder
+
+                                $filename = $request->file('uploadImage')->getClientOriginalName(); // get the original name
+                                $path = $request->file('uploadImage')->storeAs('public', $filename); // store the new image to the store/public
+
+                                    if ($path) { // if success of storing the directory
+                                        $fileSave = Product::where('id', $productId) // update to the database the new name db
+                                                    ->update([
+                                                        'image' => $filename
+                                                    ]);
+
+                                        if ($fileSave) { // if success of updating new name in db
+                                            return back()->with('success' , 'Product image updated successfully');
+                                        }
+
+                                        return back()->withInput()->with('errors', 'Error update product image (Saving the image name to the database)'); // else failed updating to db
+                                    }
+
+                                    return back()->withInput()->with('errors', 'Error update product image (Storing the new image to the directory)'); // failed to storing to directory
+                            }
+
+                            return back()->withInput()->with('errors', 'Error update product image (Deleting the existing image to the directory)'); // failed to delete existing image to directory
                         }
 
-                        return back()->withInput()->with('errors', 'Error update product image (Deleting the existing image to the directory)'); // failed to delete existing image to directory
-                    }
+                    
+                } else {
+                   return "No file selected"; // if no file selected
+                }
 
-                
-            } else {
-               return "No file selected"; // if no file selected
-            }
-    }
-
-    public function getAddToCart(Request $request, $id) {
-        $product = Product::find($id);
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->add($product, $product->id);
-
-        $request->session()->put('cart', $cart);
-        return redirect()->route('shop.index');
-
-    }
-
-    public function getCart() {
-        if (!Session::has('cart')) {
-            return view('shop.shopping-cart');
         }
-        $oldCart = Session::get('cart');
-        $cart = new Cart($oldCart);
-        return view('shop.shopping-cart', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice]);
+        return back(); 
+           
     }
+
 }
