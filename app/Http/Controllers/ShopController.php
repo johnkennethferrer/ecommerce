@@ -170,6 +170,47 @@ class ShopController extends Controller
 
     }
 
+    public function getAddByOne($id) {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->addByOne($id);
+
+        Session::put('cart', $cart);
+        return redirect()->route('product.shoppingCart');
+
+    }
+
+    public function getReduceByOne($id) {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->reduceByOne($id);
+
+        if (count($cart->items) > 0) {
+            Session::put('cart', $cart);
+        }
+        else {
+            Session::forget('cart');
+        }
+        
+        return redirect()->route('product.shoppingCart');
+
+    }
+
+    public function getRemoveItem($id) {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+
+        if (count($cart->items) > 0) {
+            Session::put('cart', $cart);
+        }
+        else {
+            Session::forget('cart');
+        }
+
+        return redirect()->route('product.shoppingCart');
+    }
+
     public function getCart() {
         if (!Session::has('cart')) {
             return view('shop.shopping-cart');
@@ -219,11 +260,17 @@ class ShopController extends Controller
             if ($saveOrderProduct) {
 
                 $transaction = Transaction::find($lastinsertId);
-                $orders = DB::table('orderlist')->where('transaction_id', $lastinsertId)
-                                            ->get();
+                $orders = DB::table('orderlist')
+                                ->select(DB::raw(
+                                            'orderlist.quantity, products.name,
+                                            products.price, products.image'
+                                        ))
+                                ->join('products', 'orderlist.product_id','=','products.id')
+                                ->where('transaction_id', $lastinsertId)
+                                ->get();
 
                 Session::forget('cart');
-                return view('shop.order-success',[$transaction, 'orders' => $orders]);
+                return view('shop.order-success',['transaction' => $transaction, 'orders' => $orders]);
                 //->with('success', 'Order successfully');
             }
 
@@ -232,4 +279,12 @@ class ShopController extends Controller
         } 
 
     } 
+
+    public function customerOrders() {
+
+        $orderTransaction = Transaction::find(Auth::user()->id)
+                                ->get();
+        return view('shop.my-orders', ['transactions' => $orderTransaction]);
+
+    }
 }

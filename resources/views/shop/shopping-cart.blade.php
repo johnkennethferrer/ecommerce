@@ -38,9 +38,17 @@
 	                           		<td>
 	                           			<h3><span class="badge badge-info"><span>&#8369; </span>{{ $product['item']['price'] }}</span></h3>
 	                           		</td>	
-		                           	<td><h4><span class="badge badge-success">{{ $product['qty'] }}</span></h4></td>
+		                           	<td><h4>
+			                           		<a href="{{ route('product.reduceByOne', ['id' => $product['item']['id']] )}}" class="btn btn-danger">-</a>
+			                           			<span class="badge"><h2>{{ $product['qty'] }}</h2></span>
+			                           		<a href="{{ route('product.addByOne', ['id' => $product['item']['id']] )}}" class="btn btn-primary">+</a>
+
+			                           		<a href="{{ route('product.revomeItem', ['id' => $product['item']['id']] )}}" class="btn btn-danger float-right mt-2">Remove</a>
+
+		                           		</h4>
+		                           	</td>
 		                           	<td>
-	                           			<h3><span class="badge badge-danger"><span>&#8369; </span>{{ number_format($product['item']['price'] * $product['qty'], 2) }}</span></h3>
+	                           			<h3><span class="badge badge-success"><span>&#8369; </span>{{ number_format($product['item']['price'] * $product['qty'], 2) }}</span></h3>
 	                           		</td>	
 								</tr>
 							@endforeach

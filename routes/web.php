@@ -36,6 +36,21 @@ Route::get('/add-to-cart/{id}', [
 	'as' => 'product.addToCart'
 ]);
 
+Route::get('/addByOne/{id}', [
+	'uses' => 'ShopController@getAddByOne',
+	'as' => 'product.addByOne'
+]);
+
+Route::get('/reduceByOne/{id}', [
+	'uses' => 'ShopController@getReduceByOne',
+	'as' => 'product.reduceByOne'
+]);
+
+Route::get('/remove/{id}', [
+	'uses' => 'ShopController@getRemoveItem',
+	'as' => 'product.revomeItem'
+]);
+
 Route::get('/shopping-cart', [
 	'uses' => 'ShopController@getCart',
 	'as' => 'product.shoppingCart'
@@ -83,6 +98,11 @@ Route::group(['prefix' => 'user'], function() {
 		Route::get('/customer_logout', [
 			'uses' => 'ShopController@customerLogout',
 			'as' => 'user.customer_logout',
+		]);
+
+		Route::get('/customer_orders', [
+			'uses' => 'ShopController@customerOrders',
+			'as' => 'user.customer_orders',
 		]);
 
 	});

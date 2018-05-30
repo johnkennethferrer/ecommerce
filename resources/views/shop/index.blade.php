@@ -60,7 +60,7 @@
                                 <img class="card-img-top image-responsive" src="{{ asset('storage/') }}/{{ $product->image }}">
                                 @endif
                               <div class="card-body">
-                                <h5 class="card-title text-center">{{ $product->name }}</h5>
+                                <h5 class="card-title text-center"><strong>{{ $product->name }}</strong></h5>
                                 <p class="card-text text-center"><span>&#8369; </span>{{ $product->price }}</p>
                                 <hr>
                                 <a href="{{ route('product.addToCart', ['id' => $product->id])}}" class="btn btn-success form-control">Add to cart</a>
