@@ -67,6 +67,16 @@ Route::post('/checkout', [
 	'as' => 'checkout'
 ]);
 
+Route::post('/cancelorder', [
+	'uses' => 'ShopController@cancelOrder',
+	'as' => 'cancelorder'
+]);
+
+Route::get('/vieworder/{id}', [
+	'uses' => 'ShopController@viewOrderList',
+	'as' => 'order.vieworder'
+]);
+
 Route::group(['prefix' => 'user'], function() {
 
 	Route::group(['middleware' => 'guest'], function() {

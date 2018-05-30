@@ -287,4 +287,28 @@ class ShopController extends Controller
         return view('shop.my-orders', ['transactions' => $orderTransaction]);
 
     }
+
+    public function cancelOrder(Request $request) {
+        $cancelOrder = Transaction::where('id', $request->input('id'))
+                                ->update([
+                                    'status' => "Cancelled"
+                                ]);
+        if ($cancelOrder) {
+            return back()->with('success',"You cancelled an order successfully.");
+        } 
+    }
+
+    public function viewOrderList($id) {
+        $transaction = Transaction::find($id);
+        $orderlist = DB::table('orderlist')
+                        ->select(DB::raw(
+                                    'orderlist.quantity, products.name,
+                                    products.price, products.image'
+                                ))
+                        ->join('products', 'orderlist.product_id','=','products.id')
+                        ->where('transaction_id', $id)
+                        ->get();
+        return view('shop.orderlist', ['transaction' => $transaction, 'orderlists' => $orderlist]);
+    }
+
 }
