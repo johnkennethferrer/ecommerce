@@ -115,6 +115,8 @@ class ShopController extends Controller
             'role_id' => 2,
         ]);
 
+        Auth::login($user);
+        
         return redirect()->route('shop.index');
     }   
 

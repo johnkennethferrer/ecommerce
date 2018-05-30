@@ -2,20 +2,6 @@
 
 @section('content')
 
-
-<!-- <div class="container">
-    <div class="row">
-        <div class="col">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="category.html">Category</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Product</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</div> -->
 <div class="container">
     <div class="row">
         <div class="col-md-12 bg-dark" style="height: 300px;">
@@ -77,7 +63,7 @@
                                 <h5 class="card-title text-center">{{ $product->name }}</h5>
                                 <p class="card-text text-center"><span>&#8369; </span>{{ $product->price }}</p>
                                 <hr>
-                                <a href="#" class="btn btn-success form-control">Add to cart</a>
+                                <a href="{{ route('product.addToCart', ['id' => $product->id])}}" class="btn btn-success form-control">Add to cart</a>
                               </div>
                             </div>
                         </div>

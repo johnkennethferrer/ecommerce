@@ -28,20 +28,55 @@ Route::resource('shop', 'ShopController');
 //products
 Route::post('/update_image', 'ProductsController@updateImage')->name('update_image');
 
-//shop
-Route::get('/customer_register','ShopController@customerRegister')->name('customer_register');
-Route::get('/customer_login','ShopController@customerLogin')->name('customer_login');
-Route::get('/customer_logout','ShopController@customerLogout')->name('customer_logout');
-Route::post('/customer_signup', 'ShopController@customerSignup')->name('customer_signup');
-Route::post('/customer_signin', 'ShopController@customerSignin')->name('customer_signin');
+// //shop
+Route::get('/add-to-cart/{id}', [
+	'uses' => 'ProductsController@getAddToCart',
+	'as' => 'product.addToCart'
+]);
 
-// Route::get('/customer_register', [
-// 		'uses' => 'ShopController@customerRegister',
-// 		'as' => 'user.customer_register',
-// 		'middleware' => 'auth'
-// 	]);
+Route::get('/shopping-cart', [
+	'uses' => 'ProductsController@getCart',
+	'as' => 'product.shoppingCart'
+]);
 
-// Route::get('/customer_login', [
-// 		'uses' => 'ShopController@ccustomerLogin',
-// 		'as' => 'user.customer_login',
-// 	]);
+Route::group(['prefix' => 'user'], function() {
+
+	Route::group(['middleware' => 'guest'], function() {
+
+		Route::get('/customer_register', [
+			'uses' => 'ShopController@customerRegister',
+			'as' => 'user.customer_register',
+		]);
+
+		Route::post('/customer_signup', [
+			'uses' => 'ShopController@customerSignup',
+			'as' => 'user.customer_signup',
+		]);
+
+		Route::get('/customer_login', [
+			'uses' => 'ShopController@customerLogin',
+			'as' => 'user.customer_login',
+		]);
+
+		Route::post('/customer_signin', [
+			'uses' => 'ShopController@customerSignin',
+			'as' => 'user.customer_signin',
+		]);
+
+	});
+	
+	Route::group(['middleware' => 'auth'], function() {
+
+		Route::get('/customer_logout', [
+			'uses' => 'ShopController@customerLogout',
+			'as' => 'user.customer_logout',
+		]);
+
+	});
+
+	
+
+	
+
+});
+
