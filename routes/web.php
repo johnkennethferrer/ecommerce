@@ -118,6 +118,11 @@ Route::get('/vieworder/{id}', [
 	'as' => 'order.vieworder'
 ]);
 
+Route::get('/category/{id}', [
+	'uses' => 'ShopController@filterByCategory',
+	'as' => 'shop.category'
+]);
+
 Route::group(['prefix' => 'user'], function() {
 
 	Route::group(['middleware' => 'guest'], function() {

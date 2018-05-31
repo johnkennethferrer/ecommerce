@@ -42,15 +42,21 @@
                             <a class="nav-link" href="contact.html">Contact</a>
                         </li>
                         @if(Auth::check())
-                            <li class="nav-item">
-                                <a class="nav-link">{{ Auth::user()->name }}</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }} <span class="caret"></span></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <div class="dropdown-item">
+                                        <a class="text-secondary d-block" href="/user/customer_orders">My orders</a> 
+                                        <a class="text-secondary" href="/user/customer_logout">Logout</a>   
+                                    </div>
+                                </div>
                             </li>
-                            <li class="nav-item">
+                           <!--  <li class="nav-item">
                                 <a class="nav-link" href="/user/customer_orders">My orders</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/user/customer_logout">Logout</a>
-                            </li>
+                            </li> -->
                         @else
                             <li class="nav-item">
                                 <a class="nav-link" href="/login">Login</a>

@@ -336,7 +336,7 @@
                       <td>{{ $cancelledorders->id }}</td>
                       <td>{{ $cancelledorders->user->name }}</td>
                       <td><span>&#8369; </span>{{ $cancelledorders->total_amount }}</td>
-                      <td><span class="badge badge-success">{{ $cancelledorders->status }}</span></td>
+                      <td><span class="badge badge-danger">{{ $cancelledorders->status }}</span></td>
                       <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewcancelled{{$cancelledorders->id}}">View order</button></td>
 
                       <div class="modal fade bd-example-modal-lg viewcancelled{{$cancelledorders->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

@@ -261,4 +261,16 @@ class ShopController extends Controller
         return view('shop.orderlist', ['transaction' => $transaction, 'orderlists' => $orderlist]);
     }
 
+    public function filterByCategory($id) {
+
+        $getProductbyCategory = Product::where('category_id', $id)
+                                            ->whereNull('deleted_at')
+                                            ->get();
+
+        $categories = Category::whereNull('deleted_at')
+                            ->get();
+
+        return view('shop.category', ['products' => $getProductbyCategory, 'categories' => $categories]);
+    }
+
 }

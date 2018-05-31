@@ -79,6 +79,12 @@
 							<div class="right-status">Completed</div>
 						</div>
 					</div>
+				@elseif($transaction->status == "Cancelled")
+					<div class="col-md-12 mb-5 mt-3"> 
+						<div class="row"  style="display: flex; justify-content: center;">
+							<h4>You <span class="badge badge-danger">Cancelled</span> this order.</h4>
+						</div>
+					</div>
 				@endif
 
 				<div class="col-md-10 mt-5" style="margin:auto;">

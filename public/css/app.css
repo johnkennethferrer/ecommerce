@@ -21,6 +21,10 @@
     transform: translate(-50%, 100%);
 }
 
+.category-link:hover {
+    color:white;
+}
+
 /*!
  * Bootstrap v4.0.0 (https://getbootstrap.com)
  * Copyright 2011-2018 The Bootstrap Authors
