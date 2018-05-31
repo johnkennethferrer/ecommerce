@@ -37,6 +37,8 @@ Route::get('customers', [
 	'as' => 'customers'
 ]);
 
+////////////////////////////////////////////////////////////
+
 //orders 
 Route::get('orders', [
 	'uses' => 'OrdersController@getIndex',
@@ -51,6 +53,19 @@ Route::get('/processorder/{id}', [
 Route::get('/deliverorder/{id}', [
 	'uses' => 'OrdersController@deliverOrder',
 	'as' => 'deliverorder'
+]);
+
+Route::get('sendemail', [
+	'uses' => 'OrdersController@sendEmail',
+	'as' => 'sendemail'
+]);
+
+//////////////////////////////////////////////////////////////
+
+//reports
+Route::get('reports',[
+	'uses' => 'ReportsController@getIndex',
+	'as' => 'reports'
 ]);
 
 

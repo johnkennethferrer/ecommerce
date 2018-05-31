@@ -7,6 +7,7 @@ use App\Transaction;
 use Auth;
 use DB;
 use App\Product;
+use Mail;
 
 class OrdersController extends Controller
 {
@@ -113,5 +114,16 @@ class OrdersController extends Controller
 									'status' => "Completed"
 								]);
 		return back()->with('success','Order is successfully deliver.');
+    }
+
+    public function sendEmail() {
+        $data = array("name" => "John Doe", "body" => "Test mail");
+
+        Mail::send('orders.sent', $data, function($message) {
+            $message->to('kenneth.ferrerskie30@gmail.com', 'Test')
+                    ->subject('Logic8 Web Testing Mail');
+            $message->from('johnkenneth3010@gmail.com', 'John Kenneth Ferrer');
+        });
+        echo "Email sent";
     }
 }

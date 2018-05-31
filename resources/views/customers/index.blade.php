@@ -21,7 +21,7 @@
             <th>Email address</th>
             <th>Contact no</th>
             <th>Address</th>
-            <th>Action</th>
+            <!-- <th>Action</th> -->
           </thead>
           <tbody>
             @foreach($customers as $customer)
@@ -31,7 +31,7 @@
                 <td>{{ $customer->email }}</td>
                 <td>{{ $customer->contact_no }}</td>
                 <td><textarea class="form-control" rows="3" readonly>{{ $customer->address }}</textarea></td>
-                <td><a href="" class="btn btn-success">View</a></td>
+                <!-- <td><a href="" class="btn btn-success">View</a></td> -->
               </tr>
             @endforeach
           </tbody>

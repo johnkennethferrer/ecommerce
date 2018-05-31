@@ -38,13 +38,13 @@
             <tr>
               <td>{{ $product->id }}</td>
               <td>{{ $product->name }}</td>
-              <td>{{ $product->price }}</td>
+              <td><span>&#8369; </span>{{ $product->price }}</td>
               <td>{{ $product->stock }}</td>
               <td>{{ $product->category->name}}</td>
               <td>
               		<textarea class="form-control" rows="3" readonly>{{ $product->description }}</textarea></td>
               <td>
-              		<a class="btn btn-success" href="/products/{{$product->id}}">View</a> &nbsp;
+              		<button class="btn btn-success" data-toggle="modal" data-target=".view_details{{$product->id}}">View</button> &nbsp;
 	                <a class="btn btn-primary" href="/products/{{$product->id}}/edit">Edit</a> &nbsp;
 	                <button class="btn btn-danger" data-toggle="modal" data-target=".delete{{$product->id}}">Delete</button>
 
@@ -78,6 +78,60 @@
 	                      </div>
 	                    </div>
 	                    <!--  End modal -->
+
+	                    <!-- Large modal / view product details -->
+						<div class="modal fade bd-example-modal-lg view_details{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+						  <div class="modal-dialog modal-lg" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header bg-success text-white">
+						        <h5 class="modal-title" id="exampleModalLabel">Product details</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						      	
+						      	<div class="col-md-12">
+						      		<div class="row">
+						      			<div class="col-md-5">
+							      			@if($product->image == null)
+			                                <img class="card-img-top image-responsive" src="{{ asset('storage/no_image.png') }}" alt="No image">
+			                                @else
+			                                <img class="card-img-top image-responsive" src="{{ asset('storage/') }}/{{ $product->image }}">
+			                                @endif
+							      		</div>
+
+							      		<div class="col-md-7">
+							      			<div class="form-group">
+							      				<label class="col-form-label"><strong>Product ID : </strong>{{ $product->id }}</label>
+							      			</div>
+							      			<div class="form-group">
+							      				<label class="col-form-label"><strong>Category : </strong>{{ $product->category->name }}</label>
+							      			</div>
+							      			<div class="form-group">
+							      				<label class="col-form-label"><strong>Product name : </strong>{{ $product->name }}</label>
+							      			</div>
+							      			<div class="form-group">
+							      				<label class="col-form-label"><strong>Price : </strong><span>&#8369; </span>{{ $product->price }}</label>
+							      			</div>
+							      			<div class="form-group">
+							      				<label class="col-form-label"><strong>Stock : </strong>{{ $product->stock }}</label>
+							      			</div>
+							      			<div class="form-group">
+							      				<label class="col-form-label"><strong>Description : </strong>{{ $product->description }}</label>
+							      			</div>
+							      		</div>
+						      		</div>
+						      	</div>
+						      	
+						      </div>
+						      	<div class="modal-footer">
+						            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						        </div>
+						    </div>
+						  </div>
+						</div>
+
               </td>
             </tr>
             @endforeach
