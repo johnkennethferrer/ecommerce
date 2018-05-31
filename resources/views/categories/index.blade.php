@@ -89,7 +89,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	      	<form method="post" action="{{ route('categories.store') }}" enctype="multipart/form-data">
+	      	<form method="post" action="{{ route('categories.store') }}">
               @csrf
 
               <div class="col-md-12">

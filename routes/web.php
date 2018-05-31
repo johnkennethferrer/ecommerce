@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/', 'Auth\LoginController@index')->name('');
 
+//dashboard
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('categories', 'CategoriesController');
@@ -30,7 +31,27 @@ Route::resource('shop', 'ShopController');
 //products
 Route::post('/update_image', 'ProductsController@updateImage')->name('update_image');
 
-// //shop
+//customers
+Route::get('customers', [
+	'uses' => 'CustomersController@getIndex',
+	'as' => 'customers'
+]);
+
+//orders 
+Route::get('orders', [
+	'uses' => 'OrdersController@getIndex',
+	'as' => 'orders'
+]);
+
+Route::get('/processorder/{id}', [
+	'uses' => 'OrdersController@processOrder',
+	'as' => 'processorder'
+]);
+
+
+
+///////////////////////////////////////////////////////////////
+// shop
 Route::get('/add-to-cart/{id}', [
 	'uses' => 'ShopController@getAddToCart',
 	'as' => 'product.addToCart'

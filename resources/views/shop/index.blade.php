@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12 bg-dark" style="height: 300px;">
+        <div class="col-md-12 p-0" style="height: 300px;">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
               <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -13,13 +13,13 @@
               </ol>
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img class="d-block w-100" src="" alt="First slide">
+                  <img class="d-block w-100" style="height:300px;" src="{{ asset('storage/banner/banner1.png') }}" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                  <img class="d-block w-100" src=".../800x400?auto=yes&bg=666&fg=444&text=Second slide" alt="Second slide">
+                  <img class="d-block w-100" style="height:300px;" src="{{ asset('storage/banner/banner2.jpeg') }}" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                  <img class="d-block w-100" src=".../800x400?auto=yes&bg=555&fg=333&text=Third slide" alt="Third slide">
+                  <img class="d-block w-100" style="height:300px;" src=".../800x400?auto=yes&bg=555&fg=333&text=Third slide" alt="Third slide">
                 </div>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
