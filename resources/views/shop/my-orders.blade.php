@@ -43,6 +43,7 @@
 									</td>
 									<td>
 										<a href="{{ route('order.vieworder', ['id' => $transaction->id] )}}" class="btn btn-success">View</a>
+										@if($transaction->status == "Pending")	
 										<button class="btn btn-danger" data-toggle="modal" data-target=".cancel{{$transaction->id}}">Cancel Order</button>
 										
 										<!--Cancell order modal -->
@@ -70,6 +71,9 @@
 										    </div>
 										  </div>
 										</div>
+
+										@endif
+
 									</td>
 								</tr>
 							@endforeach

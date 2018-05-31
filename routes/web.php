@@ -48,6 +48,11 @@ Route::get('/processorder/{id}', [
 	'as' => 'processorder'
 ]);
 
+Route::get('/deliverorder/{id}', [
+	'uses' => 'OrdersController@deliverOrder',
+	'as' => 'deliverorder'
+]);
+
 
 
 ///////////////////////////////////////////////////////////////

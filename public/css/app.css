@@ -1,4 +1,27 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);/*!
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+.centered-status {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 100%);
+}
+
+.left-status {
+	position: absolute;
+    top: 50%;
+    left: 29%;
+    transform: translate(-50%, 100%);
+}
+
+.right-status {
+	position: absolute;
+    top: 50%;
+    right: 22%;
+    transform: translate(-50%, 100%);
+}
+
+/*!
  * Bootstrap v4.0.0 (https://getbootstrap.com)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
