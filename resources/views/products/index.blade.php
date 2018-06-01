@@ -14,9 +14,9 @@
 	    <div class="btn-toolbar mb-2 mb-md-0">
 	      <div class="btn-group mr-2">
 	      	@if($countcritical != 0)
-	      		
+	      		<button class="btn btn-danger p-3 blink_me" data-toggle="modal" data-target=".critical-products"><i class="fa fa-exclamation-triangle"></i> Critical Products (Stock less than 10)</button>
 	      	@endif
-	      	<button class="btn btn-danger p-3 blink_me" data-toggle="modal" data-target=".critical-products"><i class="fa fa-exclamation-triangle"></i> Critical Products (Stock less than 10)</button>
+	      
 	        <button class="btn btn-primary p-3" data-toggle="modal" data-target=".add-product"><i class="fa fa-plus"></i> Add Product</button>
 	        <button class="btn btn-success p-3" data-toggle="modal" data-target=".import-excel"><i class="fa fa-download"></i> Import CSV file</button>
 	        <a href="{{ route('exportproduct') }}" target="_blank" class="btn btn-secondary p-3 text-white"><i class="fa fa-upload"></i> Export to Excel file</a>

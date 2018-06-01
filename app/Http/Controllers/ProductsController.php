@@ -44,7 +44,7 @@ class ProductsController extends Controller
                             ->count();
 
             $criticalProduct = DB::table('products')
-                                    ->where('stock','<=',119)
+                                    ->where('stock','<=',10)
                                     ->get();
             $countCritical = DB::table('products')
                                     ->where('stock','<=',10)
@@ -351,9 +351,30 @@ class ProductsController extends Controller
 
     public function viewAddStock($id)
     {
-        $getProduct = Product::find($id);
+        $getProduct = Product::where('id', $id)
+                            ->get()
+                            ->first();
 
-        return view('products.addstock', ['products' => $getProduct]);
+        $counterorder = DB::table('transactions')
+                            ->where('status', "Pending")
+                            ->count();
+
+        return view('products.addstock', ['product' => $getProduct, 'counterorder' => $counterorder]);
+    }
+
+    public function addStockProduct(Request $request)
+    {
+        $getProduct = Product::find($request->input('id'));
+        $newStock = $request->input('addedstock') + $getProduct->stock;
+
+        $updateNewStock = Product::where('id', $request->input('id'))
+                                ->update([
+                                    'stock' => $newStock
+                                ]);
+        if ($updateNewStock) {
+            return back()->with('success', 'Product successfully added stock.');
+        }
+        return back()->with('errors', 'Failed adding stock.');
     }
 
 }

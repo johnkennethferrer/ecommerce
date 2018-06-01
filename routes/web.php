@@ -56,6 +56,10 @@ Route::get('/addstock_view/{id}', [
 	'as' => 'addstock_view'
 ]);
 
+Route::post('addstock', [
+	'uses' => 'ProductsController@addStockProduct',
+	'as' => 'addstock'
+]);
 
 //////////////////////////////////////////////////////////////
 //customers

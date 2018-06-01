@@ -10,7 +10,7 @@
         @include('partials.success') 
 
 		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-		  <h1 class="h2"><a href="/products">Products/</a>Update product</h1>
+		  <h1 class="h2"><a href="/products"><i class="fa fa-shopping-cart"></i> Products/</a>Update product</h1>
 		</div>
 
 		<div class="container">
