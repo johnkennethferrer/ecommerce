@@ -248,6 +248,26 @@ class ShopController extends Controller
 
     } 
 
+    public function customerProfile() {
+        $profile = User::find(Auth::user()->id);
+
+        return view('shop.profile', ['profile' => $profile]);
+    }
+
+    public function updateProfile(Request $request) 
+    {
+        $updateProfile = User::where('id',$request->input('id'))
+                            ->update([
+                                'name' => $request->input('name'),
+                                'contact_no' => $request->input('contact'),
+                                'address' => $request->input('address')
+                            ]);
+        if ($updateProfile) {
+            return back()->with('success', 'Profile successfully updated.');
+        }
+        return back()->with('errors', 'Failed updating profile.');
+    }
+
     public function customerOrders() {
 
         $orderTransaction = Transaction::where('user_id', Auth::user()->id)

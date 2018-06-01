@@ -164,6 +164,11 @@ Route::get('/category/{id}', [
 	'as' => 'shop.category'
 ]);
 
+Route::post('editprofile', [
+	'uses' => 'ShopController@updateProfile',
+	'as' => 'editprofile'
+]);
+
 Route::group(['prefix' => 'user'], function() {
 
 	Route::group(['middleware' => 'guest'], function() {
@@ -200,6 +205,11 @@ Route::group(['prefix' => 'user'], function() {
 		Route::get('/customer_orders', [
 			'uses' => 'ShopController@customerOrders',
 			'as' => 'user.customer_orders',
+		]);
+
+		Route::get('/customer_profile', [
+			'uses' => 'ShopController@customerProfile',
+			'as' => 'user.customer_profile',
 		]);
 
 	});

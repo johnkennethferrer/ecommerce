@@ -48,6 +48,7 @@
                                 <a class="nav-link" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><i class="fa fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span></a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <div class="dropdown-item">
+                                        <a class="text-secondary d-block" href="/user/customer_profile"><i class="fa fa-user"></i> My profile</a>
                                         <a class="text-secondary d-block" href="/user/customer_orders"><i class="fa fa-list"></i> My orders</a> 
                                         <a class="text-secondary" href="/user/customer_logout"><i class="fa fa-power-off"></i> Logout</a>   
                                     </div>
