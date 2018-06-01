@@ -43,8 +43,16 @@ class ProductsController extends Controller
                             ->where('status', "Pending")
                             ->count();
 
+            $criticalProduct = DB::table('products')
+                                    ->where('stock','<=',119)
+                                    ->get();
+            $countCritical = DB::table('products')
+                                    ->where('stock','<=',10)
+                                    ->count();
+
             return view('products.index', ['products' => $products, 'categories' => $categories,
-                                            'trashedProduct' => $trashProduct, 'counterorder' => $counterorder]);
+                                            'trashedProduct' => $trashProduct, 'counterorder' => $counterorder,
+                                            'critical' => $criticalProduct, 'countcritical' => $countCritical]);
         }
         return back();
     }
@@ -339,6 +347,13 @@ class ProductsController extends Controller
             return back()->with('success', 'Product restore successfully.');
         }
         return "Failed";
+    }
+
+    public function viewAddStock($id)
+    {
+        $getProduct = Product::find($id);
+
+        return view('products.addstock', ['products' => $getProduct]);
     }
 
 }

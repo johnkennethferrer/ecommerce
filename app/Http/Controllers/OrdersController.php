@@ -8,6 +8,7 @@ use Auth;
 use DB;
 use App\Product;
 use Mail;
+use App\User;
 
 class OrdersController extends Controller
 {
@@ -43,7 +44,7 @@ class OrdersController extends Controller
     		$orderlists = DB::table('orderlist')
                                 ->select(DB::raw(
                                             'orderlist.transaction_id, orderlist.quantity, products.name,
-                                            products.price, products.image'
+                                            products.price, products.image, products.id as pid'
                                         ))
                                 ->join('products', 'orderlist.product_id','=','products.id')
                                 ->get();
@@ -69,6 +70,22 @@ class OrdersController extends Controller
     							]);
 
     	if ($updateOrderStatus) {
+
+            $transaction = Transaction::find($id);
+            $userId = $transaction->user_id;
+
+            $user = User::find($userId);
+            $email = $user->email;
+
+            $admin_email = Auth::user()->email;
+            $sendmessage = "Your Order #".$id." is successfully processed and it is ready for shipped.";
+
+            Mail::raw($sendmessage, function($message) use($email, $admin_email) {
+                $message->to($email, 'Ecommerce')
+                        ->subject('Ecommerce | Logic8 Business Solution Corporation');
+                $message->from($admin_email, 'Ecommerce | Administrator');
+            });
+
     		return back()->with('success',"Order #$id is successfully processed."); 	
     	} 
 
@@ -117,6 +134,7 @@ class OrdersController extends Controller
 								->update([
 									'status' => "Completed"
 								]);
+
 		return back()->with('success',"Order #$id is successfully delivered.");
     }
 
@@ -126,13 +144,54 @@ class OrdersController extends Controller
                                     'status' => "Rejected"
                                 ]);
         if ($updateReject) {
+
+            $transaction = Transaction::find($id);
+            $userId = $transaction->user_id;
+
+            $user = User::find($userId);
+            $email = $user->email;
+
+            $admin_email = Auth::user()->email;
+
+            Mail::raw('You order has been rejected.', function($message) use($email, $admin_email) {
+                $message->to($email, 'Ecommerce')
+                        ->subject('Ecommerce | Logic8 Business Solution Corporation');
+                $message->from($admin_email, 'Ecommerce | Administrator');
+            });
+
             return back()->with('success',"Order #$id is successfully rejected.");
         } 
     }
 
+    public function notifyOutOfStock($pid, $oid) // product id, order no
+    {
+        $getTransaction = Transaction::find($oid); // get transaction
+        $getProduct = Product::find($pid); //get product
+
+        $prodName = $getProduct->name;
+        $email = $getTransaction->user->email;
+
+        $admin_email = Auth::user()->email;
+
+        $sendmessage = "Order #".$oid." | "."Product name :".$prodName." is out of stock. We will notify you if the have an stock. ASAP!";
+
+        $sendMail = Mail::raw($sendmessage, function($message) use($email, $admin_email) {
+            $message->to($email, 'Ecommerce')
+                    ->subject('Ecommerce | Logic8 Business Solution Corporation');
+            $message->from($admin_email, 'Ecommerce | Administrator');
+        }); 
+
+        return back()->with('success',"Notification successfully sent.");
+
+    }
+
     public function sendEmail() {
-        Mail::raw('Hello world', function($message) {
-            $message->to('kenneth.ferrerskie30@gmail.com', 'Test')
+        $email = "kenneth.ferrerskie30@gmail.com";
+        $anything = "hello";
+        $text = "Hi";
+
+        Mail::raw($text, function($message) use($email, $anything) {
+            $message->to($email, 'Test')
                     ->subject('Ecommerce | Logic8 Business Solution Corporation');
             $message->from('johnkenneth3010@gmail.com', 'John Kenneth Ferrer');
         });

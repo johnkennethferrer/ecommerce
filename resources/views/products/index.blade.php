@@ -13,6 +13,10 @@
 	    <h1 class="h2"><i class="fa fa-shopping-cart"></i> Products</h1>
 	    <div class="btn-toolbar mb-2 mb-md-0">
 	      <div class="btn-group mr-2">
+	      	@if($countcritical != 0)
+	      		
+	      	@endif
+	      	<button class="btn btn-danger p-3 blink_me" data-toggle="modal" data-target=".critical-products"><i class="fa fa-exclamation-triangle"></i> Critical Products (Stock less than 10)</button>
 	        <button class="btn btn-primary p-3" data-toggle="modal" data-target=".add-product"><i class="fa fa-plus"></i> Add Product</button>
 	        <button class="btn btn-success p-3" data-toggle="modal" data-target=".import-excel"><i class="fa fa-download"></i> Import CSV file</button>
 	        <a href="{{ route('exportproduct') }}" target="_blank" class="btn btn-secondary p-3 text-white"><i class="fa fa-upload"></i> Export to Excel file</a>
@@ -291,10 +295,54 @@
 	  </div>
 	</div>
 
+	<!-- Large modal / crittical Products -->
+	<div class="modal fade bd-example-modal-lg critical-products" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header bg-danger text-white">
+	        <h5 class="modal-title" id="exampleModalLabel">Critical Products</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+
+	      	<table class="table table-striped table-sm" id="tableCritical">
+	          <thead>
+	            <tr>
+	              <th>Product ID</th>
+	              <th>Product Name</th>
+	              <th>Stock</th>
+	              <th width="100px">Action</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	          	@foreach($critical as $product)
+	            <tr>
+	              <td>{{ $product->id }}</td>
+	              <td>{{ $product->name }}</td>
+	              <td>{{ $product->stock }}</td>	
+	              <td>
+	              		<a class="btn btn-primary" href="{{ route('addstock_view', ['id' => $product->id]) }}"><i class="fa fa-plus"></i> Add stock</a> &nbsp;
+	              </td>
+	            </tr>
+	            @endforeach
+	          </tbody>
+	        </table>
+	      	
+	      </div>
+	      	<div class="modal-footer">
+	            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+	        </div>
+	    </div>
+	  </div>
+	</div>
+
 	<script> 
     $(document).ready( function () {
         $('#table').DataTable();
         $('#tableTrashed').DataTable();
+        $('#tableCritical').DataTable();
     });
   </script>
 

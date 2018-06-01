@@ -92,17 +92,20 @@
                                     <div class="col-md-2 border p-3">
                                       <strong>Image</strong>
                                     </div>
-                                    <div class="col-md-4 border p-3">
+                                    <div class="col-md-3 border p-3">
                                       <strong>Product name</strong>
                                     </div>
-                                    <div class="col-md-2 border p-3">
-                                      <strong>Quantity</strong>
+                                    <div class="col-md-1 border p-3">
+                                      <strong>Qty</strong>
                                     </div>
                                     <div class="col-md-2 border p-3">
                                       <strong>Price</strong>
                                     </div>
                                     <div class="col-md-2 border p-3">
-                                      <strong>Price</strong>
+                                      <strong>Subtotal</strong>
+                                    </div>
+                                    <div class="col-md-2 border p-3">
+                                      <strong>Action</strong>
                                     </div>
                                   </div>
 
@@ -117,10 +120,10 @@
                                             <img class="card-img-top image-responsive" src="{{ asset('storage/') }}/{{ $orderlist->image }}" style="height:100px; width:100px">
                                           @endif
                                         </div>
-                                        <div class="col-md-4 border p-3">
+                                        <div class="col-md-3 border p-3">
                                           {{ $orderlist->name }}
                                         </div>
-                                        <div class="col-md-2 border p-3">
+                                        <div class="col-md-1 border p-3">
                                           {{ $orderlist->quantity }}
                                         </div>
                                         <div class="col-md-2 border p-3">
@@ -128,6 +131,9 @@
                                         </div>
                                         <div class="col-md-2 border p-3">
                                           <span>&#8369; </span>{{ number_format($orderlist->price * $orderlist->quantity, 2) }}
+                                        </div>
+                                        <div class="col-md-2 border p-3">
+                                          <a href="{{ route('notify', ['pid' => $orderlist->pid, 'oid' => $allorder->id]) }}" class="btn btn-warning text-white"><i class="fa fa-envelope-o"></i> (No stock)</a>
                                         </div>
                                       </div>
 

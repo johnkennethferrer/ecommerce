@@ -51,6 +51,11 @@ Route::get('/restore/{id}', [
 	'as' => 'restore'
 ]);
 
+Route::get('/addstock_view/{id}', [
+	'uses' => 'ProductsController@viewAddStock',
+	'as' => 'addstock_view'
+]);
+
 
 //////////////////////////////////////////////////////////////
 //customers
@@ -85,6 +90,11 @@ Route::get('/rejectorder/{id}', [
 Route::get('sendemail', [
 	'uses' => 'OrdersController@sendEmail',
 	'as' => 'sendemail'
+]);
+
+Route::get('/notify/{pid}/{oid}', [
+	'uses' => 'OrdersController@notifyOutOfStock',
+	'as' => 'notify'
 ]);
 
 //////////////////////////////////////////////////////////////
@@ -149,7 +159,6 @@ Route::get('/category/{id}', [
 	'uses' => 'ShopController@filterByCategory',
 	'as' => 'shop.category'
 ]);
-
 
 Route::group(['prefix' => 'user'], function() {
 

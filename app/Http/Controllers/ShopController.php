@@ -15,6 +15,7 @@ use App\Orderlist;
 use App\Transaction;
 use DB;
 use Carbon\Carbon;
+use Mail;
 
 class ShopController extends Controller
 {
@@ -221,6 +222,21 @@ class ShopController extends Controller
                                 ->join('products', 'orderlist.product_id','=','products.id')
                                 ->where('transaction_id', $lastinsertId)
                                 ->get();
+
+                $transaction = Transaction::find($lastinsertId);
+                $userId = $transaction->user_id;
+
+                $user = User::find($userId);
+                $email = $user->email;
+
+                $admin_email = Auth::user()->email;
+                $sendmessage = "Your Order #".$lastinsertId." is successfully placed. Wait for another notication for your order. Thank you";
+
+                Mail::raw($sendmessage, function($message) use($email, $admin_email) {
+                    $message->to($email, 'Ecommerce')
+                            ->subject('Ecommerce | Logic8 Business Solution Corporation');
+                    $message->from($admin_email, 'Ecommerce | Administrator');
+                });
 
                 Session::forget('cart');
                 return view('shop.order-success',['transaction' => $transaction, 'orders' => $orders]);
