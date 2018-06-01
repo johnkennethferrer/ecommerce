@@ -11,7 +11,8 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2"><i class="fa fa-home"></i> Dashboard</h1>
       </div>
-
+      <!-- <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="543" height="229" style="display: block; width: 543px; height: 229px;"></canvas>
+ -->
       <div class="row">
         <div class="col-lg-4 col-xs-6">
             <!-- small box -->

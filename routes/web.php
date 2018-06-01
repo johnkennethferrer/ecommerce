@@ -46,6 +46,11 @@ Route::post('processexcel', [
 	'as' => 'processexcel'
 ]);
 
+Route::get('/restore/{id}', [
+	'uses' => 'ProductsController@restoreProduct',
+	'as' => 'restore'
+]);
+
 
 //////////////////////////////////////////////////////////////
 //customers

@@ -131,11 +131,9 @@ class OrdersController extends Controller
     }
 
     public function sendEmail() {
-        $data = array("name" => "John Doe", "body" => "Test mail");
-
-        Mail::send('orders.sent', $data, function($message) {
+        Mail::raw('Hello world', function($message) {
             $message->to('kenneth.ferrerskie30@gmail.com', 'Test')
-                    ->subject('Logic8 Web Testing Mail');
+                    ->subject('Ecommerce | Logic8 Business Solution Corporation');
             $message->from('johnkenneth3010@gmail.com', 'John Kenneth Ferrer');
         });
         echo "Email sent";

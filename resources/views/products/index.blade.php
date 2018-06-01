@@ -248,39 +248,7 @@
 	              <td>{{ $product->price }}</td>
 	              <td>{{ $product->stock }}</td>	
 	              <td>
-	              		<a class="btn btn-success" href=""><i class="fa fa-chevron-down"></i> Restore</a> &nbsp;
-		                <!-- <button class="btn btn-danger" data-toggle="modal" data-target=".delete{{$product->id}}">Force Delete</button> -->
-
-			                <!-- Modal -->
-		                    <!-- <div class="modal fade bd-example-modal-lg delete{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		                      <div class="modal-dialog modal-md modal-dialog-centered">
-		                        <div class="modal-content">
-
-		                          <div class="modal-header bg-danger">
-		                            <h6 class="modal-title text-white" id="exampleModalLabel">Delete product</h6>
-		                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                              <span aria-hidden="true">&times;</span>
-		                            </button>
-		                          </div>
-
-		                          <div class="modal-body">
-		                            Are you sure do you want to delete product?
-		                          </div>
-
-		                          <div class="modal-footer">
-		                             <form id="delete-form" action="{{ route('products.destroy', [$product->id]) }}" 
-		                              method="POST">
-		                                  <input type="hidden" name="_method" value="delete">
-		                                      @csrf
-		                                  <button type="submit" class="btn btn-primary">Yes</button>
-		                            </form> 
-		                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-		                          </div>
-
-		                        </div>
-		                      </div>
-		                    </div> -->
-		                    <!--  End modal -->
+	              		<a class="btn btn-success" href="{{ route('restore', ['id' => $product->id]) }}"><i class="fa fa-chevron-down"></i> Restore</a> &nbsp;
 	              </td>
 	            </tr>
 	            @endforeach

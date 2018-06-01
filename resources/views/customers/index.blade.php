@@ -21,7 +21,7 @@
             <th>Email address</th>
             <th>Contact no</th>
             <th>Address</th>
-            <!-- <th>Action</th> -->
+            <th>Action</th>
           </thead>
           <tbody>
             @foreach($customers as $customer)
@@ -31,7 +31,35 @@
                 <td>{{ $customer->email }}</td>
                 <td>{{ $customer->contact_no }}</td>
                 <td><textarea class="form-control" rows="3" readonly>{{ $customer->address }}</textarea></td>
-                <!-- <td><a href="" class="btn btn-success">View</a></td> -->
+                <td><button class="btn btn-success" data-toggle="modal" data-target=".notify{{$customer->id}}"><i class="fa fa-envelope-o"></i> Notify</button></td>
+
+                <!-- Large modal / notif customer -->
+                <div class="modal fade bd-example-modal-lg notify{{$customer->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="exampleModalLabel">Send message</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <form method="post" action="{{ route('importexcel') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                              <label for="excelfile">File (.xlxs):</label>
+                              <input id="excelfile" type="file" name="excel_file" class="form-control">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                  <button type="submit" class="btn btn-primary"><i class="fa fa-folder-open"></i> Parse</button>
+                            </div>
+                        </form>           
+                     </div>
+                    </div>
+                  </div>
+                </div>
               </tr>
             @endforeach
           </tbody>

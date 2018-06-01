@@ -331,4 +331,14 @@ class ProductsController extends Controller
 
     }
 
+    public function restoreProduct($id)
+    {
+        $productRestore = Product::where('id', $id)
+                                ->restore();
+        if ($productRestore) {
+            return back()->with('success', 'Product restore successfully.');
+        }
+        return "Failed";
+    }
+
 }
