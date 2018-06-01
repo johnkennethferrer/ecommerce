@@ -18,9 +18,14 @@ class CustomersController extends Controller
    		if (Auth::user()->role_id == 1) {
 
 	   		$customers = User::where('role_id', 2)
-	   						->whereNull('deleted_at')
-	   						->get();
-	   		return view('customers.index', ['customers' => $customers]);
+        	   						->whereNull('deleted_at')
+        	   						->get();
+
+        $counterorder = DB::table('transactions')
+                            ->where('status', "Pending")
+                            ->count();
+
+	   		return view('customers.index', ['customers' => $customers, 'counterorder' => $counterorder]);
    		}
     	return back();
    	}

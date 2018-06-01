@@ -10,30 +10,32 @@
     @include('partials.success') 
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-      <h1 class="h2">Order Management</h1>
+      <h1 class="h2"><i class="fa fa-file"></i> Order Management</h1>
     </div>
 
     <div class="table-responsive">
-        <button class="text-white p-3 w-25 float-left border-0 tablink" style="cursor:pointer;" onclick="openPage('Orders', this, 'green')" id="defaultOpen"><strong>Orders (Pending) 
+        <button class="text-white p-3 float-left border-0 tablink" style="cursor:pointer; width:20%;" onclick="openPage('Orders', this, 'green')" id="defaultOpen"><strong>Orders (Pending) 
           @if($counterorder)
             <sup class="badge badge-danger">{{ $counterorder }}</sup>
           @endif
         </strong></button>
 
-        <button class="text-white p-3 w-25 float-left border-0 tablink" style="cursor:pointer;" onclick="openPage('Delivery', this, 'green')"><strong>Delivery 
+        <button class="text-white p-3 float-left border-0 tablink" style="cursor:pointer; width:20%;" onclick="openPage('Delivery', this, 'green')"><strong>Delivery 
           @if($counterdelivery)
             <sup class="badge badge-danger">{{ $counterdelivery }}</sup>
           @endif
         </strong></button>
 
-        <button class="text-white p-3 w-25 float-left border-0 tablink" style="cursor:pointer;" onclick="openPage('Completed', this, 'green')"><strong>Completed
+        <button class="text-white p-3 float-left border-0 tablink" style="cursor:pointer; width:20%;" onclick="openPage('Completed', this, 'green')"><strong>Completed
         </strong></button>
 
-        <button class="text-white p-3 w-25 float-left border-0 tablink" style="cursor:pointer;" onclick="openPage('Cancelled', this, 'green')"><strong>Cancelled  
+        <button class="text-white p-3 float-left border-0 tablink" style="cursor:pointer; width:20%;" onclick="openPage('Cancelled', this, 'green')"><strong>Cancelled  
           @if($countercancelled)
             <sup class="badge badge-danger">{{ $countercancelled }}</sup>
           @endif
         </strong></button>
+
+        <button class="text-white p-3 float-left border-0 tablink" style="cursor:pointer; width:20%;" onclick="openPage('Rejected', this, 'green')"><strong>Rejected</strong></button>
 
 
         <div id="Orders" class="tabcontent border p-3">
@@ -55,7 +57,7 @@
                       <td>{{ $allorder->user->name }}</td>
                       <td><span>&#8369; </span>{{ $allorder->total_amount }}</td>
                       <td><span class="badge badge-info">{{ $allorder->status }}</span></td>
-                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".vieworder{{$allorder->id}}">View order</button></td>
+                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".vieworder{{$allorder->id}}"><i class="fa fa-eye"></i> View order</button></td>
 
                       <div class="modal fade bd-example-modal-lg vieworder{{$allorder->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
@@ -137,9 +139,9 @@
                               </div>
 
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-danger">REMOVE ORDER</button>
-                                <a href="{{ route('processorder', ['id' => $allorder->id])}}" class="btn btn-primary" >PROCESS ORDER</a>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                                <a href="{{ route('rejectorder', ['id' => $allorder->id])}}" class="btn btn-danger"><i class="fa fa-times"></i> REJECT ORDER</a>
+                                <a href="{{ route('processorder', ['id' => $allorder->id])}}" class="btn btn-primary" ><i class="fa fa-check"></i> PROCESS ORDER</a>
                               </div>
 
                           </div>
@@ -173,7 +175,7 @@
                       <td>{{ $delivery->user->name }}</td>
                       <td><span>&#8369; </span>{{ $delivery->total_amount }}</td>
                       <td><span class="badge badge-primary">{{ $delivery->status }}</span></td>
-                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewdelivery{{$delivery->id}}">Deliver</button></td>  
+                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewdelivery{{$delivery->id}}"><i class="fa fa-truck"></i> Deliver</button></td>  
 
                         <div class="modal fade bd-example-modal-sm viewdelivery{{$delivery->id}}  " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-md modal-dialog-centered">
@@ -222,7 +224,7 @@
                       <td>{{ $completeorders->user->name }}</td>
                       <td><span>&#8369; </span>{{ $completeorders->total_amount }}</td>
                       <td><span class="badge badge-success">{{ $completeorders->status }}</span></td>
-                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewcompelete{{$completeorders->id}}">View order</button></td>
+                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewcompelete{{$completeorders->id}}"><i class="fa fa-eye"></i> View order</button></td>
 
                       <div class="modal fade bd-example-modal-lg viewcompelete{{$completeorders->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
@@ -337,7 +339,7 @@
                       <td>{{ $cancelledorders->user->name }}</td>
                       <td><span>&#8369; </span>{{ $cancelledorders->total_amount }}</td>
                       <td><span class="badge badge-danger">{{ $cancelledorders->status }}</span></td>
-                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewcancelled{{$cancelledorders->id}}">View order</button></td>
+                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewcancelled{{$cancelledorders->id}}"><i class="fa fa-eye"></i> View order</button></td>
 
                       <div class="modal fade bd-example-modal-lg viewcancelled{{$cancelledorders->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
@@ -432,6 +434,122 @@
             </div>
 
         </div>
+
+        <div id="Rejected" class="tabcontent border p-3">
+          
+          <br/><br/><br/>
+            <div class="table-responsive">
+              <table class="table table-striped table-sm" id="tableRejected">
+                <thead>
+                  <th>Order #</th>
+                  <th>Customer</th>
+                  <th>Total amount</th>
+                  <th>Status</th>
+                  <th width="100px">Action</th>
+                </thead>
+                <tbody>
+                  @foreach($rejected as $rejectedorders)
+                    <tr>
+                      <td>{{ $rejectedorders->id }}</td>
+                      <td>{{ $rejectedorders->user->name }}</td>
+                      <td><span>&#8369; </span>{{ $rejectedorders->total_amount }}</td>
+                      <td><span class="badge badge-warning text-white">{{ $rejectedorders->status }}</span></td>
+                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewrejected{{$rejectedorders->id}}"><i class="fa fa-eye"></i> View order</button></td>
+
+                      <div class="modal fade bd-example-modal-lg viewrejected{{$rejectedorders->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+
+                              <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title" id="exampleModalLabel">Order list</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+
+                              <div class="modal-body">
+                                <h5><strong>Order <u>#{{$rejectedorders->id}}</u></strong></h5>
+
+                                  <div class="row mt-3">
+                                    <div class="col-md-12">
+                                      <strong>Name : {{ $rejectedorders->user->name }}</strong>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <strong>Email address : {{ $rejectedorders->user->email }}</strong>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <strong>Contact number : {{ $rejectedorders->user->contact_no }}</strong>
+                                    </div>
+                                    <div class="col-md-12">
+                                      <strong>Address : {{ $rejectedorders->user->address }}</strong>
+                                    </div>
+                                  </div>  
+
+                                  <div class="row mt-3">
+                                    <div class="col-md-2 border p-3">
+                                      <strong>Image</strong>
+                                    </div>
+                                    <div class="col-md-4 border p-3">
+                                      <strong>Product name</strong>
+                                    </div>
+                                    <div class="col-md-2 border p-3">
+                                      <strong>Quantity</strong>
+                                    </div>
+                                    <div class="col-md-2 border p-3">
+                                      <strong>Price</strong>
+                                    </div>
+                                    <div class="col-md-2 border p-3">
+                                      <strong>Price</strong>
+                                    </div>
+                                  </div>
+
+                                  @foreach($orderlists as $orderlist)
+                                    @if($orderlist->transaction_id == $rejectedorders->id)
+                                                                 
+                                      <div class="row">
+                                        <div class="col-md-2 border p-3">
+                                          @if($orderlist->image == null)
+                                            <img class="card-img-top image-responsive" src="{{ asset('storage/no_image.png') }}" alt="No image" style="height:100px; width:100px">
+                                            @else
+                                            <img class="card-img-top image-responsive" src="{{ asset('storage/') }}/{{ $orderlist->image }}" style="height:100px; width:100px">
+                                          @endif
+                                        </div>
+                                        <div class="col-md-4 border p-3">
+                                          {{ $orderlist->name }}
+                                        </div>
+                                        <div class="col-md-2 border p-3">
+                                          {{ $orderlist->quantity }}
+                                        </div>
+                                        <div class="col-md-2 border p-3">
+                                          <span>&#8369; </span>{{ $orderlist->price }}
+                                        </div>
+                                        <div class="col-md-2 border p-3">
+                                          <span>&#8369; </span>{{ number_format($orderlist->price * $orderlist->quantity, 2) }}
+                                        </div>
+                                      </div>
+
+                                    @endif
+                                  @endforeach
+
+                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{$rejectedorders->total_amount}}</strong></h5>
+                              </div>
+
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+
+        </div>
+
     </div>
   </main>  
 
@@ -442,6 +560,7 @@
         $('#tableCompleted').DataTable();
         $('#tableCancelled').DataTable();
         $('#tableOrderlist').DataTable();
+        $('#tableRejected').DataTable();
     });
   </script>
 

@@ -71,7 +71,7 @@
                                 <h5 class="card-title text-center"><strong>{{ $product->name }}</strong></h5>
                                 <p class="card-text text-center"><span>&#8369; </span>{{ $product->price }}</p>
                                 <hr>
-                                <a href="{{ route('product.addToCart', ['id' => $product->id])}}" class="btn btn-success form-control">Add to cart</a>
+                                <a href="{{ route('product.addToCart', ['id' => $product->id])}}" class="btn btn-success form-control"><i class="fa fa-plus"></i> Add to cart</a>
                               </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                                       </div>
 
                                       <div class="form-group">
-                                        <a href="{{ route('product.addToCart', ['id' => $product->id])}}" class="btn btn-success form-control">Add to cart</a>
+                                        <a href="{{ route('product.addToCart', ['id' => $product->id])}}" class="btn btn-success form-control"><i class="fa fa-plus"></i> Add to cart</a>
                                       </div>
                                     </div>
                                   </div>
@@ -128,7 +128,7 @@
                                 
                               </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                                 </div>
                             </div>
                           </div>

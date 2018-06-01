@@ -101,7 +101,8 @@ class ShopController extends Controller
         $cart->add($product, $product->id);
 
         $request->session()->put('cart', $cart);
-        return redirect()->route('shop.index');
+        //return redirect()->route('shop.index');
+        return back();
 
     }
 
@@ -197,15 +198,17 @@ class ShopController extends Controller
         $lastinsertId = DB::getPdo()->lastInsertId();
 
         if ($saveTransaction) {
+            $data = [];
 
             foreach ($cart->items as $cart) {
-                
-                $saveOrderProduct = DB::table('orderlist')->insert([
-                                    'transaction_id' => $lastinsertId,
-                                    'product_id' => $cart['item']['id'],
-                                    'quantity' => $cart['qty'],
-                                ]);
+                $data[] = [
+                            'transaction_id' => $lastinsertId,
+                            'product_id' => $cart['item']['id'],
+                            'quantity' => $cart['qty'],  
+                            ];
             }
+
+            $saveOrderProduct = DB::table('orderlist')->insert($data);
 
             if ($saveOrderProduct) {
 
@@ -221,7 +224,6 @@ class ShopController extends Controller
 
                 Session::forget('cart');
                 return view('shop.order-success',['transaction' => $transaction, 'orders' => $orders]);
-                //->with('success', 'Order successfully');
             }
 
             return "Failed";
@@ -232,9 +234,11 @@ class ShopController extends Controller
 
     public function customerOrders() {
 
-        $orderTransaction = Transaction::find(Auth::user()->id)
-                                ->get();
-        return view('shop.my-orders', ['transactions' => $orderTransaction]);
+        $orderTransaction = Transaction::where('user_id', Auth::user()->id)
+                                        ->get();
+        $orderCount = Transaction::where('user_id', Auth::user()->id)
+                                        ->count();
+        return view('shop.my-orders', ['transactions' => $orderTransaction, 'ordercount' => $orderCount]);
 
     }
 

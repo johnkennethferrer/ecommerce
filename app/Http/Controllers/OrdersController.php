@@ -36,6 +36,9 @@ class OrdersController extends Controller
     		$countcancelled = DB::table('transactions')
     						->where('status', "Cancelled")
     						->count();
+            //get rejected order
+            $rejected = Transaction::where('status', "Rejected")
+                                ->get();
 
     		$orderlists = DB::table('orderlist')
                                 ->select(DB::raw(
@@ -50,6 +53,7 @@ class OrdersController extends Controller
     									'deliveries' => $delivery, 'counterdelivery' => $countdelivery,
     									'completed' => $completed,
     									'cancelled' => $cancelled, 'countercancelled' => $countcancelled,
+                                        'rejected' => $rejected,
     									'orderlists' => $orderlists,
     									]);
     		
@@ -113,7 +117,17 @@ class OrdersController extends Controller
 								->update([
 									'status' => "Completed"
 								]);
-		return back()->with('success','Order is successfully deliver.');
+		return back()->with('success',"Order #$id is successfully delivered.");
+    }
+
+    public function rejectOrder($id) {
+        $updateReject = Transaction::where('id', $id)
+                                ->update([
+                                    'status' => "Rejected"
+                                ]);
+        if ($updateReject) {
+            return back()->with('success',"Order #$id is successfully rejected.");
+        } 
     }
 
     public function sendEmail() {

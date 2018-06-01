@@ -72,7 +72,7 @@
 
                       <div class="col-md-12">
                           <div class="form-group float-right">
-                            <button class="btn btn-primary float-right" type="submit">Submit</button>
+                            <button class="btn btn-primary float-right" type="submit"><i class="fa fa-arrow-down"></i> Save</button>
                           </div>
                       </div>
 
@@ -99,7 +99,7 @@
                     
                     </form>
 
-                    <button class="btn btn-primary ml-5" id="edit_image" onclick="edit_image()">EDIT</button>
+                    <button class="btn btn-primary ml-5" id="edit_image" onclick="edit_image()"><i class="fa fa-pencil-square-o"></i> EDIT</button>
                     <button class="btn btn-danger mt-2" id="cancel_image" onclick="cancel_image()" style="display: none;">CANCEL</button>
 
                   </div>

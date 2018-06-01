@@ -46,7 +46,7 @@
 
                 <div class="col-md-12">
                     <div class="form-group float-right">
-                      <button class="btn btn-primary float-right" type="submit">Save</button>
+                      <button class="btn btn-primary float-right" type="submit"><i class="fa fa-arrow-down"></i> Save</button>
                     </div>
                 </div>
 

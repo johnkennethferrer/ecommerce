@@ -13,7 +13,10 @@ class ReportsController extends Controller
 {
 
 	public function getIndex() {
-		return view('reports.index');
+		$counterorder = DB::table('transactions')
+			                ->where('status', "Pending")
+			                ->count();
+		return view('reports.index', ['counterorder' => $counterorder]);
 	}
     
 }

@@ -25,29 +25,17 @@ class CategoriesController extends Controller
 
             $categories = Category::whereNull('deleted_at')
                             ->get();
-            //dd($categories);
-            return view('categories.index', ['categories' => $categories]);
+
+            $counterorder = DB::table('transactions')
+                            ->where('status', "Pending")
+                            ->count();
+
+            return view('categories.index', ['categories' => $categories, 'counterorder' => $counterorder]);
             
         }
         return back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -69,29 +57,16 @@ class CategoriesController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Category $category)
     {
         //
         if (Auth::user()->role_id == 1) {
             $findCategory = Category::find($category->id);
-            return view('categories.edit', ['category' => $category]);
+            $counterorder = DB::table('transactions')
+                            ->where('status', "Pending")
+                            ->count();
+            return view('categories.edit', ['category' => $category, 'counterorder' => $counterorder]);
         }
         return back();
     }

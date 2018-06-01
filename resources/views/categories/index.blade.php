@@ -10,10 +10,10 @@
         @include('partials.success') 
 
 	  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-	    <h1 class="h2">Categories</h1>
+	    <h1 class="h2"><i class="fa fa-list"></i> Categories</h1>
 	    <div class="btn-toolbar mb-2 mb-md-0">
 	      <div class="btn-group mr-2">
-	        <button class="btn btn-primary p-3" data-toggle="modal" data-target=".add-category">Add Category</button>
+	        <button class="btn btn-primary p-3" data-toggle="modal" data-target=".add-category"><i class="fa fa-plus"></i> Add Category</button>
 	        <!-- <button class="btn btn-success p-3">Import CSV file</button> -->
 	      </div>
 	    </div>
@@ -37,8 +37,8 @@
               <td>
               		<textarea class="form-control" rows="3" readonly>{{ $category->description }}</textarea></td>
               <td>
-	                <a class="btn btn-primary" href="/categories/{{$category->id}}/edit">Edit</a> &nbsp;
-	                <button class="btn btn-danger" data-toggle="modal" data-target=".delete{{$category->id}}">Delete</button>
+	                <a class="btn btn-primary" href="/categories/{{$category->id}}/edit"><i class="fa fa-pencil-square-o"></i> Edit</a> &nbsp;
+	                <button class="btn btn-danger" data-toggle="modal" data-target=".delete{{$category->id}}"><i class="fa fa-times"></i> Delete</button>
 
                     <!-- Modal -->
                     <div class="modal fade bd-example-modal-lg delete{{$category->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -113,8 +113,8 @@
               </div>
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-arrow-down"></i> Save</button>
               </div>
 
             </form>

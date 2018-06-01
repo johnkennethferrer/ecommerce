@@ -7,9 +7,9 @@
 			<div class="row mb-4">
 	            <div style="display: table; margin: auto;">
 	                <div class="btn-group">
-	                	<a href="/shopping-cart" class="btn btn-primary p-3 pl-5 pr-5">Cart</a>
-						<button class="btn btn-default p-3 pl-5 pr-5">Checkout</button>
-						<button class="btn btn-default p-3 pl-5 pr-5">Thank you</button>
+	                	<a href="/shopping-cart" class="btn btn-success p-3 pl-5 pr-5"><i class="fa fa-shopping-cart"></i> Cart</a>
+						<button class="btn btn-default p-3 pl-5 pr-5"><i class="fa fa-money"></i> Checkout</button>
+						<button class="btn btn-default p-3 pl-5 pr-5">Thank you <i class="fa fa-smile-o"></i></button>
 	                </div>
 	            </div>
 	        </div>
@@ -39,11 +39,11 @@
 	                           			<h3><span class="badge badge-info"><span>&#8369; </span>{{ $product['item']['price'] }}</span></h3>
 	                           		</td>	
 		                           	<td><h4>
-			                           		<a href="{{ route('product.reduceByOne', ['id' => $product['item']['id']] )}}" class="btn btn-danger">-</a>
+			                           		<a href="{{ route('product.reduceByOne', ['id' => $product['item']['id']] )}}" class="btn btn-danger"><i class="fa fa-minus"></i></a>
 			                           			<span class="badge"><h2>{{ $product['qty'] }}</h2></span>
-			                           		<a href="{{ route('product.addByOne', ['id' => $product['item']['id']] )}}" class="btn btn-primary">+</a>
+			                           		<a href="{{ route('product.addByOne', ['id' => $product['item']['id']] )}}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
 
-			                           		<a href="{{ route('product.revomeItem', ['id' => $product['item']['id']] )}}" class="btn btn-danger float-right mt-2">Remove</a>
+			                           		<a href="{{ route('product.revomeItem', ['id' => $product['item']['id']] )}}" class="btn btn-danger float-right mt-2"><i class="fa fa-times"></i></a>
 
 		                           		</h4>
 		                           	</td>
@@ -60,7 +60,7 @@
 				</div>
 				<hr>
 				<div class="col-md-6 mb-3">
-					<a href="{{ route('checkout') }}" class="btn btn-success form-control" >Checkout</a>
+					<a href="{{ route('checkout') }}" class="btn btn-success form-control" ><i class="fa fa-check"></i> Checkout</a>
 				</div>	
 			</div>
 		</div>
@@ -70,8 +70,8 @@
 			<div class="row">
 				<div class="col-md-10 border p-0" style="margin:auto;">
 					<h3 class="p-3 text-center">No items in your cart.</h3>
-					<div class="col-md-12 mb-3">
-						<a href="/shop" class="btn btn-success form-control">BACK TO HOME</a>
+					<div class="col-md-8 mb-3" style="margin:auto;">
+						<a href="/shop" class="btn btn-success form-control"><i class="fa fa-home"></i> BACK TO HOME</a>
 					</div>
 				</div>
 			</div>

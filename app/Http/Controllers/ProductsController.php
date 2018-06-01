@@ -9,6 +9,10 @@ use App\Category;
 use Auth;
 use DB;
 use Session;
+use Carbon\Carbon;
+use Excel;
+use Response;
+use App\ExcelImport;
 
 class ProductsController extends Controller
 {   
@@ -35,27 +39,16 @@ class ProductsController extends Controller
                                 ->whereNotNull('deleted_at')
                                 ->get();
 
-            return view('products.index', ['products' => $products, 'categories' => $categories, 'trashedProduct' => $trashProduct]);
+            $counterorder = DB::table('transactions')
+                            ->where('status', "Pending")
+                            ->count();
+
+            return view('products.index', ['products' => $products, 'categories' => $categories,
+                                            'trashedProduct' => $trashProduct, 'counterorder' => $counterorder]);
         }
         return back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -107,24 +100,6 @@ class ProductsController extends Controller
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Product $product)
     {
         //
@@ -134,18 +109,17 @@ class ProductsController extends Controller
 
             $selectCategory = Category::where('id', "!=", $findProduct->category_id)
                                     ->get();
-            return view('products.edit', ['product' => $findProduct, 'categories' => $selectCategory]); 
+
+            $counterorder = DB::table('transactions')
+                            ->where('status', "Pending")
+                            ->count();
+
+            return view('products.edit', ['product' => $findProduct, 'categories' => $selectCategory,
+                                            'counterorder' => $counterorder]); 
         }
         return back(); 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Product $product)
     {
         //
@@ -166,12 +140,6 @@ class ProductsController extends Controller
         return back(); 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Product $product)
     {
         //
@@ -250,6 +218,117 @@ class ProductsController extends Controller
         }
         return back(); 
            
+    }
+
+    public function exportProduct() 
+    {          
+
+        $now = Carbon::now('Asia/Manila');
+        $datetime = $now->toDateTimeString();
+        $date = $now->toDateString();
+        $time = $now->toTimeString();
+
+        $headers = array(
+            "Content-type" => "text/xlsx",
+            "Content-Disposition" => "attachment; filename=Employees".$datetime.".xlsx",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );
+
+        $products = Product::whereNull('deleted_at')
+                            ->get();
+        
+        $columns = array('ID','Product name', 'Price', 'Stock', 'Category', 'Description');
+
+        $callback = function() use ($products, $columns)
+        {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach($products as $product) {
+
+                fputcsv($file, array($product->id, $product->name, $product->price, $product->stock, $product->category->name, $product->description));
+            }
+            fclose($file);
+        };
+        return Response::stream($callback, 200, $headers);
+    }
+
+    public function importExcelfile(Request $request)
+    {
+        if (Auth::user()->role_id == 1) {
+            
+            if ($request->hasFile('excel_file')) { // if not empty the post
+                $path = $request->file('excel_file')->getRealPath(); // get the path of file
+                $data = array_map('str_getcsv', file($path));
+
+                if (count($data) > 0) { // if not empty the data
+                    $excel_data = array_slice($data,1); // slice data ($data,1) removed the first row
+
+                    $excel_data_file = ExcelImport::create([ // store to the csv table db
+                        'excel_file' => $request->file('excel_file')->getClientOriginalName(), // get the original name of file
+                        'excel_data' => json_encode($excel_data) // save the data in json 
+                    ]);
+
+                } else { // if empty return back
+                    return redirect()->back();
+                }
+
+                $counterorder = DB::table('transactions')
+                            ->where('status', "Pending")
+                            ->count();
+
+                return view('products.import_excel_fields', compact('excel_data', 'excel_data_file', 'counterorder'));
+                    
+            }
+            return back()->with('errors', 'No file selected.');
+
+        }
+    }
+
+    public function processExcelfile(Request $request)
+    {
+        if (Auth::user()->role_id == 1) {
+
+            $data = DB::table('excel')
+                        ->where('id', $request->excel_data_file_id) //get the details of 
+                        ->get()
+                        ->first();
+            $excel_data = json_decode($data->excel_data, true); //decode the json data
+                
+                $loopdata = [];
+
+                foreach ($excel_data as $product) { // loop the data
+
+                    //select category id 
+                    $selectCategoryId = DB::table('categories')
+                                            ->select('id')
+                                            ->where('name', $product[4])
+                                            ->first();
+                    $categoryId = $selectCategoryId->id;
+                    
+                    $loopdata[] = [
+                                        'name' => $product[1],
+                                        'price' => $product[2],
+                                        'stock' => $product[3],
+                                        'description' => $product[5],
+                                        'category_id' => $categoryId,
+                                        'user_id' => Auth::user()->id
+                                    ];
+
+                }
+
+                $saveData = DB::table('products')->insert($loopdata);
+
+                if ($saveData) { // if success
+                    return redirect()->route('products.index')->with('success' , 'Import successfully.');
+                }
+
+                return redirect()->route('products.index')->with('errors', 'Import failed.');
+
+        }
+
     }
 
 }

@@ -31,6 +31,23 @@ Route::resource('shop', 'ShopController');
 //products
 Route::post('/update_image', 'ProductsController@updateImage')->name('update_image');
 
+Route::get('exportproduct', [
+	'uses' => 'ProductsController@exportProduct',
+	'as' => 'exportproduct'
+]);
+
+Route::post('importexcel', [
+	'uses' => 'ProductsController@importExcelfile',
+	'as' => 'importexcel'
+]);
+
+Route::post('processexcel', [
+	'uses' => 'ProductsController@processExcelfile',
+	'as' => 'processexcel'
+]);
+
+
+//////////////////////////////////////////////////////////////
 //customers
 Route::get('customers', [
 	'uses' => 'CustomersController@getIndex',
@@ -53,6 +70,11 @@ Route::get('/processorder/{id}', [
 Route::get('/deliverorder/{id}', [
 	'uses' => 'OrdersController@deliverOrder',
 	'as' => 'deliverorder'
+]);
+
+Route::get('/rejectorder/{id}', [
+	'uses' => 'OrdersController@rejectOrder',
+	'as' => 'rejectorder'
 ]);
 
 Route::get('sendemail', [
@@ -122,6 +144,7 @@ Route::get('/category/{id}', [
 	'uses' => 'ShopController@filterByCategory',
 	'as' => 'shop.category'
 ]);
+
 
 Route::group(['prefix' => 'user'], function() {
 
