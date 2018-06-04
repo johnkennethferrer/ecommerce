@@ -173,7 +173,7 @@
                   <th>Customer</th>
                   <th>Total amount</th>
                   <th>Status</th>
-                  <th width="100px">Action</th>
+                  <th width="180px">Action</th>
                 </thead>
                 <tbody>
                   @foreach($deliveries as $delivery)
@@ -182,9 +182,12 @@
                       <td>{{ $delivery->user->name }}</td>
                       <td><span>&#8369; </span>{{ $delivery->total_amount }}</td>
                       <td><span class="badge badge-primary">{{ $delivery->status }}</span></td>
-                      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewdelivery{{$delivery->id}}"><i class="fa fa-truck"></i> Deliver</button></td>  
+                      <td>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewdelivery{{$delivery->id}}"><i class="fa fa-eye"></i> View</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".deliver{{$delivery->id}}"><i class="fa fa-truck"></i> Deliver</button>
+                      </td>  
 
-                        <div class="modal fade bd-example-modal-sm viewdelivery{{$delivery->id}}  " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                        <div class="modal fade bd-example-modal-sm deliver{{$delivery->id}}  " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-md modal-dialog-centered">
                             <div class="modal-content">
                               <div class="modal-header bg-success text-white">
@@ -203,6 +206,92 @@
                             </div>
                           </div>
                         </div>
+
+                        <div class="modal fade bd-example-modal-lg viewdelivery{{$delivery->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+
+                              <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title" id="exampleModalLabel">Order list</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+
+                              <div class="modal-body">
+                                <h5><strong>Order <u>#{{$delivery->id}}</u></strong></h5>
+
+                                  <div class="row mt-3">
+                                    <div class="col-md-12">
+                                      <strong>Name : {{ $delivery->user->name }}</strong>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <strong>Email address : {{ $delivery->user->email }}</strong>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <strong>Contact number : {{ $delivery->user->contact_no }}</strong>
+                                    </div>
+                                    <div class="col-md-12">
+                                      <strong>Address : {{ $delivery->user->address }}</strong>
+                                    </div>
+                                  </div>  
+
+                                  <div class="row mt-3">
+                                    <div class="col-md-2 border p-3">
+                                      <strong>Image</strong>
+                                    </div>
+                                    <div class="col-md-4 border p-3">
+                                      <strong>Product name</strong>
+                                    </div>
+                                    <div class="col-md-2 border p-3">
+                                      <strong>Quantity</strong>
+                                    </div>
+                                    <div class="col-md-2 border p-3">
+                                      <strong>Price</strong>
+                                    </div>
+                                    <div class="col-md-2 border p-3">
+                                      <strong>Price</strong>
+                                    </div>
+                                  </div>
+
+                                  @foreach($orderlists as $orderlist)
+                                    @if($orderlist->transaction_id == $delivery->id)
+                                                                 
+                                      <div class="row">
+                                        <div class="col-md-2 border p-3">
+                                          @if($orderlist->image == null)
+                                            <img class="card-img-top image-responsive" src="{{ asset('storage/no_image.png') }}" alt="No image" style="height:100px; width:100px">
+                                            @else
+                                            <img class="card-img-top image-responsive" src="{{ asset('storage/') }}/{{ $orderlist->image }}" style="height:100px; width:100px">
+                                          @endif
+                                        </div>
+                                        <div class="col-md-4 border p-3">
+                                          {{ $orderlist->name }}
+                                        </div>
+                                        <div class="col-md-2 border p-3">
+                                          {{ $orderlist->quantity }}
+                                        </div>
+                                        <div class="col-md-2 border p-3">
+                                          <span>&#8369; </span>{{ $orderlist->price }}
+                                        </div>
+                                        <div class="col-md-2 border p-3">
+                                          <span>&#8369; </span>{{ number_format($orderlist->price * $orderlist->quantity, 2) }}
+                                        </div>
+                                      </div>
+
+                                    @endif
+                                  @endforeach
+
+                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{$delivery->total_amount}}</strong></h5>
+                              </div>
+
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
 
                     </tr>
                   @endforeach

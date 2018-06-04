@@ -63,13 +63,46 @@ class OrdersController extends Controller
     }
 
     public function processOrder($id) { // update status to Processed
-    	
-    	$updateOrderStatus = Transaction::where('id', $id)
-    							->update([
-    								'status' => "Processed"
-    							]);
 
-    	if ($updateOrderStatus) {
+        $getOrderedProduct = DB::table('orderlist')
+                            ->where('transaction_id', $id)
+                            ->get();
+
+        foreach($getOrderedProduct as $ordered) { // loop get orders of order # ?
+            
+            $getProduct = Product::find($ordered->product_id); // get product
+
+                if ($getProduct->stock != 0) { // check if product stock is not 0
+                    
+                    if ($ordered->quantity <= $getProduct->stock) {
+
+                        //deduct the quantity to stock
+                        $deductedStock = $getProduct->stock - $ordered->quantity;
+
+                        $updateStock = Product::where('id', $ordered->product_id)
+                                            ->update([
+                                                'stock' => $deductedStock
+                                            ]);
+
+
+                    }
+                    else {
+                        return back()->with('errors','Product stock is insufficient for the ordered product.');
+                    }
+
+                }
+                else {
+                    return back()->with('errors','Product stock is out of stock.');
+                }
+
+        }
+
+        $updateOrderStatus = Transaction::where('id', $id)
+                                ->update([
+                                    'status' => "Processed"
+                                ]);
+
+        if ($updateOrderStatus) {
 
             $transaction = Transaction::find($id);
             $userId = $transaction->user_id;
@@ -86,56 +119,22 @@ class OrdersController extends Controller
                 $message->from($admin_email, 'Ecommerce | Administrator');
             });
 
-    		return back()->with('success',"Order #$id is successfully processed."); 	
-    	} 
+            return back()->with('success',"Order #$id is successfully processed.");     
+        } 
 
     }
 
     public function deliverOrder($id) {
 
-    	$getOrderedProduct = DB::table('orderlist')
-    						->where('transaction_id', $id)
-    						->get();
-
-    	foreach($getOrderedProduct as $ordered) { // loop get orders of order # ?
-    		
-    		$getProduct = Product::find($ordered->product_id); // get product
-
-    			if ($getProduct->stock != 0) { // check if product stock is not 0
-    				
-    				if ($ordered->quantity < $getProduct->stock) { // if stock is sufficient to order (Success)
-    					
-    					//deduct the quantity to stock
-    					$deductedStock = $getProduct->stock - $ordered->quantity;
-
-    					$updateStock = Product::where('id', $ordered->product_id)
-    										->update([
-    											'stock' => $deductedStock
-    										]);
-
-    				}
-    				else { // if stock is insufficient to the order return message can't process this order
-
-    					return back()->with('errors','Product stock is insufficient for the ordered product.');
-
-    				}
-
-    			} 
-    			else { // if product is 0 return message can't process this order
-
-    				return back()->with('errors','Product stock is out of stock.');
-
-    			}
-    	} //end of foreach
-
-    	//SUCCESS
     	//update the status of order
 		$updateStatus = Transaction::where('id', $id)
 								->update([
 									'status' => "Completed"
 								]);
-
-		return back()->with('success',"Order #$id is successfully delivered.");
+        if ($updateStatus) {
+            return back()->with('success',"Order #$id is successfully delivered.");
+        }
+        
     }
 
     public function rejectOrder($id) {
