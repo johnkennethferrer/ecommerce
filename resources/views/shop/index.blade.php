@@ -138,6 +138,12 @@
                         </div>
                     @endforeach
                 </div>
+
+                <div class="row">
+                  <div class="col-md-3">
+                    {!! $products->links(); !!}
+                  </div>
+                </div>
             </div>
         </div>
     </div>

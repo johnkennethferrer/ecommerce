@@ -73,4 +73,9 @@ class HomeController extends Controller
             return back()->with('success', 'Successfully added a administrator.');
         }
     }
+
+    public function myProfile()
+    {
+        return view('users.myprofile');
+    }
 }

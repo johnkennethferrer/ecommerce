@@ -28,7 +28,7 @@ class ShopController extends Controller
     {
         //
         $products = Product::whereNull('deleted_at')
-                            ->get();
+                            ->paginate(6);
         $categories = Category::whereNull('deleted_at')
                             ->get();
         return view('shop.index', ['products' => $products, 'categories' => $categories]);
@@ -305,7 +305,7 @@ class ShopController extends Controller
 
         $getProductbyCategory = Product::where('category_id', $id)
                                             ->whereNull('deleted_at')
-                                            ->get();
+                                            ->paginate(6);
 
         $getCategory = Category::where('id', $id)
                                 ->get()

@@ -60,6 +60,9 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('myprofile') }}">
+                                        <i class="fa fa-user"></i> My profile
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('addadmin') }}">
                                         <i class="fa fa-plus"></i><i class="fa fa-user"></i> Add admin
                                     </a>

@@ -1,4 +1,4 @@
-<nav class="col-md-2 d-none d-md-block bg-light sidebar p-fixed">
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
   <div class="sidebar-sticky">
     <div class="col-md-12">
       <h6 class="text-center"><strong>Hello, {{ Auth::user()->name }}</strong></h6>

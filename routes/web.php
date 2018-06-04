@@ -38,6 +38,12 @@ Route::post('registeradmin', [
 	'as' => 'registeradmin'
 ]);	
 
+//my profile
+Route::get('myprofile', [
+	'uses' => 'HomeController@myProfile',
+	'as' => 'myprofile'
+]);
+
 //products
 Route::post('/update_image', 'ProductsController@updateImage')->name('update_image');
 

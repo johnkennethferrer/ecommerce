@@ -184,7 +184,7 @@
                       <td><span class="badge badge-primary">{{ $delivery->status }}</span></td>
                       <td>
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewdelivery{{$delivery->id}}"><i class="fa fa-eye"></i> View</button>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".deliver{{$delivery->id}}"><i class="fa fa-truck"></i> Deliver</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".deliver{{$delivery->id}}"><i class="fa fa-truck"></i> Deliver</button>
                       </td>  
 
                         <div class="modal fade bd-example-modal-sm deliver{{$delivery->id}}  " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
