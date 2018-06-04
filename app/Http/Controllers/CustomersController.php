@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use DB;
 use Auth;
+use Mail;
 
 class CustomersController extends Controller
 {
@@ -45,10 +46,7 @@ class CustomersController extends Controller
             $message->from($admin_email, 'Ecommerce | Administrator');
         });
 
-        if ($sendMail) {
-          return back()->with('success', 'Your message sent successfully.');
-        }
-        return back()->with('errors', 'Failed to send');
+        return back()->with('success', 'Your message sent successfully.');
     }
 
    

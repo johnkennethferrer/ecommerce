@@ -27,6 +27,16 @@ Route::resource('products', 'ProductsController');
 Route::resource('transactions', 'TransactionsController');
 Route::resource('shop', 'ShopController');
 
+//add admin
+Route::get('addadmin', [
+	'uses' => 'HomeController@addAdmin',
+	'as' => 'addadmin'
+]);
+
+Route::post('registeradmin', [
+	'uses' => 'HomeController@registerAdmin',
+	'as' => 'registeradmin'
+]);	
 
 //products
 Route::post('/update_image', 'ProductsController@updateImage')->name('update_image');
@@ -68,9 +78,9 @@ Route::get('customers', [
 	'as' => 'customers'
 ]);
 
-Route::post('sendemail', [
+Route::post('sendmessage', [
 	'uses' => 'CustomersController@sendCustomerEmail',
-	'as' => 'sendemail'
+	'as' => 'sendmessage'
 ]);
 
 ////////////////////////////////////////////////////////////

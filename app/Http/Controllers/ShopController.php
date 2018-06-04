@@ -307,10 +307,14 @@ class ShopController extends Controller
                                             ->whereNull('deleted_at')
                                             ->get();
 
+        $getCategory = Category::where('id', $id)
+                                ->get()
+                                ->first();
+
         $categories = Category::whereNull('deleted_at')
                             ->get();
 
-        return view('shop.category', ['products' => $getProductbyCategory, 'categories' => $categories]);
+        return view('shop.category', ['products' => $getProductbyCategory, 'categories' => $categories, 'categoryname' => $getCategory->name]);
     }
 
 }

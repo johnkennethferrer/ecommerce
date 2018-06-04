@@ -57,6 +57,9 @@
 
         <div class="col-md-9 border">
             <div class="container mt-3">
+                <div class="row border-bottom mb-3">
+                  <h4><a href="/shop">All Products/</a>{{ $categoryname }}</h4>
+                </div>
                 <div class="row">
                     @foreach($products as $product)
                         <a data-toggle="modal" data-target=".view_details{{$product->id}}" style="cursor: pointer;">
