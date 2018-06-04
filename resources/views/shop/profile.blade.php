@@ -30,6 +30,7 @@
 						<label for="name"><strong>Address :</strong></label>
 						<p>{{ $profile->address }}</p>
 						<button class="btn btn-primary" data-toggle="modal" data-target=".profile"><i class="fa fa-pencil-square-o"></i> Edit Profile</button>
+						<a href="/user/customer_orders" class="btn btn-primary"><i class="fa fa-list"></i> My orders</a>
 					</div>
 
 				</div>

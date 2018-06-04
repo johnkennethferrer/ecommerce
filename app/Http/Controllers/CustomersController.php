@@ -30,6 +30,27 @@ class CustomersController extends Controller
     	return back();
    	}
 
+    public function sendCustomerEmail(Request $request)
+    {
+        
+        $customer = User::find($request->input('cid'));
+
+        $email = $customer->email; 
+        $admin_email = Auth::user()->email;
+        $subject = $request->input('subject');
+
+        $sendMail = Mail::raw($request->input('message'), function($message) use($email, $admin_email, $subject) {
+            $message->to($email, 'Ecommerce')
+                    ->subject($subject);
+            $message->from($admin_email, 'Ecommerce | Administrator');
+        });
+
+        if ($sendMail) {
+          return back()->with('success', 'Your message sent successfully.');
+        }
+        return back()->with('errors', 'Failed to send');
+    }
+
    
 
 }

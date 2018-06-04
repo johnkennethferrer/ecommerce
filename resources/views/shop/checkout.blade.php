@@ -74,11 +74,17 @@
 				<div class="col-md-12 mb-3">
 					<form action="{{ route('checkout') }}" method="post">
 						@csrf
-						<button class="btn btn-success form-control"><i class="fa fa-arrow-circle-down"></i> PLACE ORDER</button>
+						<button class="btn btn-success form-control" id="place-order"><i class="fa fa-arrow-circle-down"></i> PLACE ORDER</button>
 					</form>	
 				</div>
 			</div>
 		</div>
 	</div>
+
+<script>
+	$("#place-order").click(function() {
+		$("#place-order").attr('disabled');
+	});
+</script>
 
 @endsection

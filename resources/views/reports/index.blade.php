@@ -15,39 +15,81 @@
 
     <div class="col-md-12">
       <div class="col-md-9">
-        <div class="row">
-        
-          <div class="col-md-4">
-            <label>From :</label>
-            <?php 
-              $mydatetime = Carbon\Carbon::now();
-              $datetoday = $mydatetime->toDateString();
 
-              // $date1 = str_replace('-', '/', $datetoday);
-              // $datetomorrow = date('Y-m-d',strtotime($date1 . "+1 days"));
-             ?>
-            <input type="date" name="date_from" class="form-control" max="{{ $datetoday }}" required="">
+        <form method="post" action="{{ route('showreports') }}">
+          @csrf
+          <div class="row">
+          
+              <div class="col-md-4">
+                <label>From :</label>
+                <?php 
+                  $mydatetime = Carbon\Carbon::now();
+                  $datetoday = $mydatetime->toDateString();
+
+                  //formatted date
+                  $dateformat = new DateTime($datetoday);
+                  $dateformatted = $dateformat->format('M d, Y');
+
+                  // $date1 = str_replace('-', '/', $datetoday);
+                  // $datetomorrow = date('Y-m-d',strtotime($date1 . "+1 days"));
+                 ?>
+                <input type="date" name="date_from" class="form-control" value="{{ $datetoday }}" required>
+              </div>
+
+              <div class="col-md-4">
+                <label>To :</label>
+                <input type="date" name="date_to" class="form-control" value="{{ $datetoday }}" required>
+              </div>
+
+              <!-- <div class="col-md-3">
+                <label>Status :</label>
+                <select name="status" class="form-control" required>
+                  <option value="Completed">Completed</option>
+                  <option value="Processed">Processed</option>
+                  <option value="Pending">Pending</option>
+                </select>
+              </div> -->
+
+              <div class="col-md-2">
+                <br>
+                <button class="btn btn-primary mt-2">Submit</button>
+              </div>
+
           </div>
 
-          <div class="col-md-4">
-            <label>To :</label>
-            <input type="date" name="date_to" class="form-control" min="{{ $datetoday }}" required="">
-          </div>
-
-          <div class="col-md-4">
-            <label>Status :</label>
-            <select class="form-control">
-              <option>Completed</option>
-              <option>Processed</option>
-              <option>Pending</option>
-            </select>
-          </div>
-
-        </div>
+        </form>
       </div>
 
-      <div class="col-md-12 border mt-3">
-        
+      <div class="col-md-12 border mt-3 clearfix ">
+
+        <h4 class="m-3 bg-secondary text-white p-4 ">Sales Today ( {{ $dateformatted }} )  <a target="_blank" href="{{ route('printreporttoday') }}" class="btn btn-success float-right"><i class="fa fa-print"></i> Print</a></h4>
+        <div class="col-md-12">
+          <table class="table table-striped">
+            <thead>
+              <th>Order #</th>
+              <th>Date ordered</th>
+              <th>Amount ordered</th>
+            </thead>
+            <tbody>
+              @foreach($salestoday as $sales)
+                <tr>
+                  <td>{{ $sales->id }}</td>
+                  <td><?php 
+                    $datetime = new DateTime($sales->created_at);
+                    $dtformat = $datetime->format('M d, Y H:m A');
+                    echo $dtformat
+                   ?></td>
+                  <td><span>&#8369; </span>{{ $sales->total_amount }}</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+
+          <div class="col-md-5 float-right p-0">
+            <h5 class="bg-success p-3 text-white">Total sales: <strong><u><span>&#8369; </span>{{ $totalsale }}</u></strong></h5>
+          </div>
+        </div>
+
       </div>
       
     </div>

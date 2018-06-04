@@ -68,6 +68,11 @@ Route::get('customers', [
 	'as' => 'customers'
 ]);
 
+Route::post('sendemail', [
+	'uses' => 'CustomersController@sendCustomerEmail',
+	'as' => 'sendemail'
+]);
+
 ////////////////////////////////////////////////////////////
 
 //orders 
@@ -107,6 +112,21 @@ Route::get('/notify/{pid}/{oid}', [
 Route::get('reports',[
 	'uses' => 'ReportsController@getIndex',
 	'as' => 'reports'
+]);
+
+Route::post('showreports', [
+	'uses' => 'ReportsController@generateReport',
+	'as' => 'showreports'
+]);
+
+Route::get('/printreport/{datefrom}/{dateto}', [
+	'uses' => 'ReportsController@printReport',
+	'as' => 'printreport'
+]);
+
+Route::get('printreporttoday', [
+	'uses' => 'ReportsController@printReportToday',
+	'as' => 'printreporttoday'
 ]);
 
 
@@ -214,9 +234,4 @@ Route::group(['prefix' => 'user'], function() {
 
 	});
 
-	
-
-	
-
 });
-

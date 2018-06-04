@@ -44,19 +44,27 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                          <form method="post" action="{{ route('importexcel') }}" enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-group">
-                              <label for="excelfile">File (.xlxs):</label>
-                              <input id="excelfile" type="file" name="excel_file" class="form-control">
-                            </div>
+                         <form method="post" action="{{ route('sendemail') }}">
+                          @csrf
+                            <input type="hidden" name="cid" value="{{ $customer->id }}">
+                           <div class="form-group">
+                              <label>Subject:</label>
+                              <input type="text" name="subject" class="form-control" placeholder="Subject">
+                           </div>
+
+                           <div class="form-group"> 
+                             <label>Message:</label>
+                             <textarea name="message" class="form-control" rows="4" placeholder="Message"></textarea>
+                           </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                                  <button type="submit" class="btn btn-primary"><i class="fa fa-folder-open"></i> Parse</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                              <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane-o"></i> Send</button>
                             </div>
-                        </form>           
-                     </div>
+
+                          </form>     
+                      </div>
+        
                     </div>
                   </div>
                 </div>
