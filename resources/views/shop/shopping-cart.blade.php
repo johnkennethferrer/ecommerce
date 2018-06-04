@@ -68,7 +68,7 @@
 	@else
 		<div class="container">
 			<div class="row">
-				<div class="col-md-10 border p-0" style="margin:auto;">
+				<div class="col-md-10 p-0" style="margin:auto;">
 					<h3 class="p-3 text-center">No items in your cart.</h3>
 					<div class="col-md-8 mb-3" style="margin:auto;">
 						<a href="/shop" class="btn btn-success form-control"><i class="fa fa-home"></i> BACK TO HOME</a>

@@ -79,14 +79,14 @@
                     $dtformat = $datetime->format('M d, Y H:m A');
                     echo $dtformat
                    ?></td>
-                  <td><span>&#8369; </span>{{ $sales->total_amount }}</td>
+                  <td><span>&#8369; </span>{{ number_format($sales->total_amount, 2) }}</td>
                 </tr>
               @endforeach
             </tbody>
           </table>
 
           <div class="col-md-5 float-right p-0">
-            <h5 class="bg-success p-3 text-white">Total sales: <strong><u><span>&#8369; </span>{{ $totalsale }}</u></strong></h5>
+            <h5 class="bg-success p-3 text-white">Total sales: <strong><u><span>&#8369; </span>{{ number_format($totalsale, 2) }}</u></strong></h5>
           </div>
         </div>
 

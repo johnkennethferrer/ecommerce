@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/custom.js') }}" defer></script>
     <script src="{!! asset('js/datatables.js') !!}" defer></script>
     <script src="{!! asset('js/Chart.min.js') !!}"></script>
     <!-- jQuery 2.1.4 -->
@@ -23,6 +24,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{!! asset('css/datatables.css') !!}" rel="stylesheet">
     <link href="{!! asset('css/font-awesome.css') !!}" rel="stylesheet">
     <link href="{!! asset('css/ionicons.css') !!}" rel="stylesheet">

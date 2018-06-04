@@ -48,7 +48,7 @@
                 <h6 class="text-center"><strong>CATEGORIES</strong></h6>
                 <ul class="list-group">
                     @foreach($categories as $category)
-                        <a class="category-link" href="{{ route('shop.category', ['id' => $category->id ]) }}"><li class="list-group-item text-secondary">{{ $category->name }}</li></a>
+                        <a href="{{ route('shop.category', ['id' => $category->id ]) }}" style="text-decoration: none;"><li class="category-link list-group-item">{{ $category->name }}</li></a>
                     @endforeach
                 </ul>
             </div>

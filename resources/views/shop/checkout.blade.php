@@ -2,7 +2,9 @@
 
 @section('content')
 
-	<div class="container">
+<div id="loader" hidden></div>
+
+	<div class="container" id="container-checkout">
 		<div class="row mb-4">
             <div style="display: table; margin: auto;">
                 <div class="btn-group">
@@ -80,11 +82,5 @@
 			</div>
 		</div>
 	</div>
-
-<script>
-	$("#place-order").click(function() {
-		$("#place-order").attr('disabled');
-	});
-</script>
 
 @endsection
