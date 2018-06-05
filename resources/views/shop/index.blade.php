@@ -58,7 +58,7 @@
         <div class="col-md-9 border">
             <div class="container mt-3">
                 <div class="row border-bottom mb-3">
-                  <h4>All Products</h4>
+                  <h4 class="p-3">All Products</h4>
                 </div>
                 <div class="row">
                     @foreach($products as $product)
@@ -139,7 +139,7 @@
                     @endforeach
                 </div>
 
-                <div class="row">
+                <div class="row div-center">
                   <div class="col-md-3">
                     {!! $products->links(); !!}
                   </div>

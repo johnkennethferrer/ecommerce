@@ -7,6 +7,7 @@
 			<div class="col-md-6 p-0 border" style="margin:auto;">
 
 				@include('partials.success')
+				@include('partials.errors')
 
 				<h4 class="p-3 bg-secondary text-white">My profile</h4>
 				<div class="col-md-10 mt-3" style="margin:auto;">
@@ -44,7 +45,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-		      	<form method="post" action="">
+		      	<form method="post" action="{{ route('admineditprofile') }}">
 		        	@csrf
 		        	<input type="hidden" name="id" value="{{ Auth::user()->id }}">
 		        	<div class="col-md-8">
@@ -55,7 +56,7 @@
 
 				      	<div class="form-group">
 				      		<label for="contact">Contact no :</label>
-				      		<input id="contact" class="form-control" type="text" name="contact" value="{{ Auth::user()->contact_no }}" placeholder="Contact no" required>
+				      		<input id="contact" class="form-control" type="text" name="contact" value="{{ Auth::user()->contact_no }}" placeholder="Contact no">
 				      	</div>
 
 		        	</div>
@@ -81,24 +82,46 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-		      	<form method="post" action="">
+		      	<form method="post" action="{{ route('adminchangepassword') }}">
 		        	@csrf
 		        	<input type="hidden" name="id" value="{{ Auth::user()->id }}">
 		        	<div class="col-md-8">
-		        		<div class="form-group">
-				      		<label for="opass">Old password :</label>
-				      		<input id="opass" class="form-control" type="password" name="oldpassword" placeholder="Old password" required>
-				      	</div>
 
-				     	<div class="form-group">
-				      		<label for="newpass">New password :</label>
-				      		<input id="newpass" class="form-control" type="password" name="newpassword" placeholder="New password" required>
-				      	</div>
+		        		<div class="form-group row">
+                            <label for="current-password" class="col-md-4 col-form-label text-md-right">{{ __('Current Password') }}</label>
 
-				      	<div class="form-group">
-				      		<label for="cpass">Confirm password :</label>
-				      		<input id="cpass" class="form-control" type="password" placeholder="Confirm password" required>
-				      	</div>
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control{{ $errors->has('current-password') ? ' is-invalid' : '' }}" name="current-password">
+
+                                @if ($errors->has('current-password'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('current-password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+		        		<div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+
+                                @if ($errors->has('password'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
 
 		        	</div>
 

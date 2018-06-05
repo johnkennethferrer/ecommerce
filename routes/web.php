@@ -44,6 +44,16 @@ Route::get('myprofile', [
 	'as' => 'myprofile'
 ]);
 
+Route::post('admineditprofile', [
+	'uses' => 'HomeController@editMyProfile',
+	'as' => 'admineditprofile'
+]);
+
+Route::post('adminchangepassword', [
+	'uses' => 'HomeController@changePassword',
+	'as' => 'adminchangepassword'
+]);
+
 //products
 Route::post('/update_image', 'ProductsController@updateImage')->name('update_image');
 
@@ -203,6 +213,11 @@ Route::get('/category/{id}', [
 Route::post('editprofile', [
 	'uses' => 'ShopController@updateProfile',
 	'as' => 'editprofile'
+]);
+
+Route::post('customerchangepassword', [
+	'uses' => 'ShopController@changePassword',
+	'as' => 'customerchangepassword'
 ]);
 
 Route::group(['prefix' => 'user'], function() {

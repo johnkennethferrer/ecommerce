@@ -28,6 +28,7 @@ class ShopController extends Controller
     {
         //
         $products = Product::whereNull('deleted_at')
+                            ->orderBy('id', 'desc')
                             ->paginate(6);
         $categories = Category::whereNull('deleted_at')
                             ->get();
@@ -305,6 +306,7 @@ class ShopController extends Controller
 
         $getProductbyCategory = Product::where('category_id', $id)
                                             ->whereNull('deleted_at')
+                                            ->orderBy('id', 'desc')
                                             ->paginate(6);
 
         $getCategory = Category::where('id', $id)
@@ -315,6 +317,40 @@ class ShopController extends Controller
                             ->get();
 
         return view('shop.category', ['products' => $getProductbyCategory, 'categories' => $categories, 'categoryname' => $getCategory->name]);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $this->validate($request,[
+            'current-password' => 'required|string',
+            'password' => 'required|string|min:6|confirmed'
+        ]);
+
+        $message1 = [
+                'current-password' => 'Wrong password entered.'
+            ];
+
+        $message2 = [
+                'password' => 'Failed to update.'
+            ];
+
+        $currentpassword = Auth::user()->password;
+        if (Hash::check($request['current-password'], $currentpassword)) {
+            
+            $userId = Auth::user()->id;
+            $user = User::find($userId);
+            $user->password = Hash::make($request['password']);;
+            $user->save();
+
+            if ($user) {
+                return back()->with('success', 'Password updated successfully.');
+            }
+            return Redirect()->back()->withErrors($message2)->withInput();
+
+        }
+        else {
+            return Redirect()->back()->withErrors($message1)->withInput();
+        }
     }
 
 }

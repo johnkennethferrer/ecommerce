@@ -56,12 +56,6 @@
                                     </div>
                                 </div>
                             </li>
-                           <!--  <li class="nav-item">
-                                <a class="nav-link" href="/user/customer_orders">My orders</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/user/customer_logout">Logout</a>
-                            </li> -->
                         @else
                             <li class="nav-item">
                                 <a class="nav-link" href="/login">Login</a>
