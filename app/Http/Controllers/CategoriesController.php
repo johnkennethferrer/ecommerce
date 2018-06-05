@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use App\Product;
 
 class CategoriesController extends Controller
 {   
@@ -26,11 +27,15 @@ class CategoriesController extends Controller
             $categories = Category::whereNull('deleted_at')
                             ->get();
 
+            $trashcategory = DB::table('categories')
+                                ->whereNotNull('deleted_at')
+                                ->get();
+
             $counterorder = DB::table('transactions')
                             ->where('status', "Pending")
                             ->count();
 
-            return view('categories.index', ['categories' => $categories, 'counterorder' => $counterorder]);
+            return view('categories.index', ['categories' => $categories, 'counterorder' => $counterorder, 'trashcategory' => $trashcategory]);
             
         }
         return back();
@@ -71,13 +76,6 @@ class CategoriesController extends Controller
         return back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Category $category)
     {
         //
@@ -96,12 +94,6 @@ class CategoriesController extends Controller
         return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Category $category)
     {
         //
@@ -109,9 +101,31 @@ class CategoriesController extends Controller
             $findCategory = Category::find($category->id);
 
             if ($findCategory->delete()) {
+
+                $products = Product::where('id', $category->id)
+                                    ->get();
+
+                foreach ($products as $key) {
+                    $trashProduct = Product::where('id', $category->id)
+                                            ->delete();
+                }
                 return back()->with('success' , 'Category deleted successfully');
             }
             return back()->withInput()->with('errors', 'Error deleting category');
+        }
+        return back();
+    }
+
+    public function restoreCategory($id)
+    {
+        if (Auth::user()->role_id == 1) {
+            $findCategory = Category::where('id', $id)
+                                    ->restore();
+
+            if ($findCategory) {
+                return back()->with('success' , 'Category restored successfully');
+            }
+            return back()->withInput()->with('errors', 'Error restore category');
         }
         return back();
     }

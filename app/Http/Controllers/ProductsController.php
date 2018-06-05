@@ -341,12 +341,26 @@ class ProductsController extends Controller
 
     public function restoreProduct($id)
     {
-        $productRestore = Product::where('id', $id)
-                                ->restore();
-        if ($productRestore) {
-            return back()->with('success', 'Product restore successfully.');
+        //check category if not deleted
+        $findproduct = DB::table('products')
+                            ->where('id', $id)
+                            ->first();
+        if($findproduct) {
+            $findcategory = DB::table('categories')
+                                ->where('id', $findproduct->category_id)
+                                ->first();
+            if ($findcategory->deleted_at == "") {
+                //return "null";
+                $productRestore = Product::where('id', $id)
+                                        ->restore();
+                if ($productRestore) {
+                    return back()->with('success', 'Product restore successfully.');
+                }
+                return "Failed";
+            }
+            return back()->with('errors', 'Category of this of product is deleted.');
         }
-        return "Failed";
+        
     }
 
     public function viewAddStock($id)

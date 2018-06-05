@@ -22,7 +22,6 @@ class ProductTableSeeder extends Seeder
         	'user_id' => '',
         	'category_id' => ''
         ]);
-
         $product->save();
     }
 }

@@ -14,7 +14,7 @@
 	    <div class="btn-toolbar mb-2 mb-md-0">
 	      <div class="btn-group mr-2">
 	        <button class="btn btn-primary p-3" data-toggle="modal" data-target=".add-category"><i class="fa fa-plus"></i> Add Category</button>
-	        <!-- <button class="btn btn-success p-3">Import CSV file</button> -->
+          <button class="btn btn-warning p-3 text-white" data-toggle="modal" data-target=".trashed"><i class="fa fa-trash-o"></i> Trashed</button>
 	      </div>
 	    </div>
 	  </div>
@@ -123,9 +123,53 @@
 	  </div>
 	</div>
 
+  <!-- Large modal / trash category- -->
+  <div class="modal fade bd-example-modal-lg trashed" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-white">
+          <h5 class="modal-title" id="exampleModalLabel">Deleted category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <table class="table table-striped table-sm" id="tableTrashed">
+            <thead>
+              <tr>
+                <th>Category ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th width="180px">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($trashcategory as $category)
+              <tr>
+                <td>{{ $category->id }}</td>
+                <td>{{ $category->name }}</td>
+                <td>{{ $category->description }}</td>
+                <td>
+                    <a class="btn btn-success" href="{{ route('restorecategory', ['id' => $category->id]) }}"><i class="fa fa-chevron-down"></i> Restore</a> &nbsp;
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+          
+        </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
 	<script> 
     $(document).ready( function () {
         $('#table').DataTable();
+        $('#tableTrashed').DataTable();
     });
   </script>
 

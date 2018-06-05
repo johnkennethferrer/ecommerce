@@ -54,6 +54,13 @@ Route::post('adminchangepassword', [
 	'as' => 'adminchangepassword'
 ]);
 
+//category
+
+Route::get('/restorecategory/{id}', [
+	'uses' => 'CategoriesController@restoreCategory',
+	'as' => 'restorecategory'
+]);
+
 //products
 Route::post('/update_image', 'ProductsController@updateImage')->name('update_image');
 

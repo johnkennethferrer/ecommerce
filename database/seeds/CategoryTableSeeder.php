@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Category;
 
 class CategoryTableSeeder extends Seeder
 {
@@ -12,5 +13,10 @@ class CategoryTableSeeder extends Seeder
     public function run()
     {
         //
+        $category = new Category([
+        	'name' => '',
+        	'description' => '',
+        ]);
+        $category->save();
     }
 }

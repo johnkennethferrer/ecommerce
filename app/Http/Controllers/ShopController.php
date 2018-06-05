@@ -31,6 +31,7 @@ class ShopController extends Controller
                             ->orderBy('id', 'desc')
                             ->paginate(6);
         $categories = Category::whereNull('deleted_at')
+                            ->orderBy('name', 'asc')
                             ->get();
         return view('shop.index', ['products' => $products, 'categories' => $categories]);
     }
@@ -339,6 +340,7 @@ class ShopController extends Controller
                                 ->first();
 
         $categories = Category::whereNull('deleted_at')
+                            ->orderBy('name', 'asc')
                             ->get();
 
         return view('shop.category', ['products' => $getProductbyCategory, 'categories' => $categories, 'categoryname' => $getCategory->name]);
