@@ -105,8 +105,8 @@ class CategoriesController extends Controller
                 $products = Product::where('id', $category->id)
                                     ->get();
 
-                foreach ($products as $key) {
-                    $trashProduct = Product::where('id', $category->id)
+                foreach ($products as $product) {
+                    $trashProduct = Product::where('category_id', $category->id)
                                             ->delete();
                 }
                 return back()->with('success' , 'Category deleted successfully');
