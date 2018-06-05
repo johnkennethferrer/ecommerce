@@ -68,7 +68,14 @@ class ShopController extends Controller
         // }
 
         return redirect()->route('shop.index');
-    }   
+    } 
+
+    public function verifyAccount($id)
+    {
+
+        Auth::login($user);
+        return redirect()->route('shop.index');
+    } 
 
     public function customerLogin()
     {

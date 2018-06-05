@@ -56,7 +56,7 @@
                     <tr>
                       <td>{{ $allorder->id }}</td>
                       <td>{{ $allorder->user->name }}</td>
-                      <td><span>&#8369; </span>{{ $allorder->total_amount }}</td>
+                      <td><span>&#8369; </span>{{ number_format($allorder->total_amount, 2) }}</td>
                       <td><span class="badge badge-info">{{ $allorder->status }}</span></td>
                       <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".vieworder{{$allorder->id}}"><i class="fa fa-eye"></i> View order</button></td>
 
@@ -128,7 +128,7 @@
                                           {{ $orderlist->quantity }}
                                         </div>
                                         <div class="col-md-2 border p-3">
-                                          <span>&#8369; </span>{{ $orderlist->price }}
+                                          <span>&#8369; </span>{{ number_format($orderlist->price, 2) }}
                                         </div>
                                         <div class="col-md-2 border p-3">
                                           <span>&#8369; </span>{{ number_format($orderlist->price * $orderlist->quantity, 2) }}
@@ -142,7 +142,7 @@
                                   @endforeach
 
 
-                                <h5 class="mt-3"><strong>Total amount : <span>&#8369; </span>{{$allorder->total_amount}}</strong></h5>
+                                <h5 class="mt-3"><strong>Total amount : <span>&#8369; </span>{{number_format($allorder->total_amount,2)}}</strong></h5>
                               </div>
 
                               <div class="modal-footer">
@@ -180,7 +180,7 @@
                     <tr>
                       <td>{{ $delivery->id }}</td>
                       <td>{{ $delivery->user->name }}</td>
-                      <td><span>&#8369; </span>{{ $delivery->total_amount }}</td>
+                      <td><span>&#8369; </span>{{ number_format($delivery->total_amount, 2) }}</td>
                       <td><span class="badge badge-primary">{{ $delivery->status }}</span></td>
                       <td>
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewdelivery{{$delivery->id}}"><i class="fa fa-eye"></i> View</button>
@@ -272,7 +272,7 @@
                                           {{ $orderlist->quantity }}
                                         </div>
                                         <div class="col-md-2 border p-3">
-                                          <span>&#8369; </span>{{ $orderlist->price }}
+                                          <span>&#8369; </span>{{ number_format($orderlist->price, 2) }}
                                         </div>
                                         <div class="col-md-2 border p-3">
                                           <span>&#8369; </span>{{ number_format($orderlist->price * $orderlist->quantity, 2) }}
@@ -282,7 +282,7 @@
                                     @endif
                                   @endforeach
 
-                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{$delivery->total_amount}}</strong></h5>
+                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{number_format($delivery->total_amount,2)}}</strong></h5>
                               </div>
 
                               <div class="modal-footer">
@@ -311,6 +311,7 @@
                   <th>Customer</th>
                   <th>Total amount</th>
                   <th>Status</th>
+                  <th>Datetime completed</th>
                   <th width="100px">Action</th>
                 </thead>
                 <tbody>
@@ -318,8 +319,15 @@
                     <tr>
                       <td>{{ $completeorders->id }}</td>
                       <td>{{ $completeorders->user->name }}</td>
-                      <td><span>&#8369; </span>{{ $completeorders->total_amount }}</td>
+                      <td><span>&#8369; </span>{{ number_format($completeorders->total_amount, 2) }}</td>
                       <td><span class="badge badge-success">{{ $completeorders->status }}</span></td>
+                      <td>
+                        <?php 
+                          $datetime = new DateTime($completeorders->completed_at);
+                          $formatted = $datetime->format('M d, Y H:m A');
+                         ?>
+                         {{ $formatted }}
+                      </td>
                       <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewcompelete{{$completeorders->id}}"><i class="fa fa-eye"></i> View order</button></td>
 
                       <div class="modal fade bd-example-modal-lg viewcompelete{{$completeorders->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -387,7 +395,7 @@
                                           {{ $orderlist->quantity }}
                                         </div>
                                         <div class="col-md-2 border p-3">
-                                          <span>&#8369; </span>{{ $orderlist->price }}
+                                          <span>&#8369; </span>{{ number_format($orderlist->price, 2) }}
                                         </div>
                                         <div class="col-md-2 border p-3">
                                           <span>&#8369; </span>{{ number_format($orderlist->price * $orderlist->quantity, 2) }}
@@ -397,7 +405,7 @@
                                     @endif
                                   @endforeach
 
-                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{$completeorders->total_amount}}</strong></h5>
+                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{number_format($completeorders->total_amount, 2)}}</strong></h5>
                               </div>
 
                               <div class="modal-footer">
@@ -433,7 +441,7 @@
                     <tr>
                       <td>{{ $cancelledorders->id }}</td>
                       <td>{{ $cancelledorders->user->name }}</td>
-                      <td><span>&#8369; </span>{{ $cancelledorders->total_amount }}</td>
+                      <td><span>&#8369; </span>{{ number_format($cancelledorders->total_amount, 2) }}</td>
                       <td><span class="badge badge-danger">{{ $cancelledorders->status }}</span></td>
                       <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewcancelled{{$cancelledorders->id}}"><i class="fa fa-eye"></i> View order</button></td>
 
@@ -502,7 +510,7 @@
                                           {{ $orderlist->quantity }}
                                         </div>
                                         <div class="col-md-2 border p-3">
-                                          <span>&#8369; </span>{{ $orderlist->price }}
+                                          <span>&#8369; </span>{{ number_format($orderlist->price, 2) }}
                                         </div>
                                         <div class="col-md-2 border p-3">
                                           <span>&#8369; </span>{{ number_format($orderlist->price * $orderlist->quantity, 2) }}
@@ -512,7 +520,7 @@
                                     @endif
                                   @endforeach
 
-                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{$cancelledorders->total_amount}}</strong></h5>
+                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{number_format($cancelledorders->total_amount, 2)}}</strong></h5>
                               </div>
 
                               <div class="modal-footer">
@@ -548,7 +556,7 @@
                     <tr>
                       <td>{{ $rejectedorders->id }}</td>
                       <td>{{ $rejectedorders->user->name }}</td>
-                      <td><span>&#8369; </span>{{ $rejectedorders->total_amount }}</td>
+                      <td><span>&#8369; </span>{{ number_format($rejectedorders->total_amount, 2) }}</td>
                       <td><span class="badge badge-warning text-white">{{ $rejectedorders->status }}</span></td>
                       <td><button type="button" class="btn btn-success" data-toggle="modal" data-target=".viewrejected{{$rejectedorders->id}}"><i class="fa fa-eye"></i> View order</button></td>
 
@@ -617,7 +625,7 @@
                                           {{ $orderlist->quantity }}
                                         </div>
                                         <div class="col-md-2 border p-3">
-                                          <span>&#8369; </span>{{ $orderlist->price }}
+                                          <span>&#8369; </span>{{ number_format($orderlist->price, 2) }}
                                         </div>
                                         <div class="col-md-2 border p-3">
                                           <span>&#8369; </span>{{ number_format($orderlist->price * $orderlist->quantity, 2) }}
@@ -627,7 +635,7 @@
                                     @endif
                                   @endforeach
 
-                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{$rejectedorders->total_amount}}</strong></h5>
+                                <h5 class="mt-3"><strong>Total amount paid : <span>&#8369; </span>{{number_format($rejectedorders->total_amount, 2)}}</strong></h5>
                               </div>
 
                               <div class="modal-footer">
@@ -653,10 +661,18 @@
     $(document).ready( function () {
         $('#tableOrders').DataTable();
         $('#tableDelivery').DataTable();
-        $('#tableCompleted').DataTable();
-        $('#tableCancelled').DataTable();
+
+        $('#tableCompleted').DataTable( {
+            "order": [[ 0, "desc" ]]
+        } );
+        $('#tableCancelled').DataTable( {
+            "order": [[ 0, "desc" ]]
+        } );
         $('#tableOrderlist').DataTable();
-        $('#tableRejected').DataTable();
+        $('#tableRejected').DataTable( {
+            "order": [[ 0, "desc" ]]
+        } );
+
     });
   </script>
 

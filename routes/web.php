@@ -159,6 +159,11 @@ Route::get('printreporttoday', [
 
 ///////////////////////////////////////////////////////////////
 // shop
+Route::get('/verifyyouraccount/{$id}', [
+	'uses' => 'ShopController@verifyAccount',
+	'as' => 'verifyyouraccount'
+]);
+
 Route::get('/add-to-cart/{id}', [
 	'uses' => 'ShopController@getAddToCart',
 	'as' => 'product.addToCart'

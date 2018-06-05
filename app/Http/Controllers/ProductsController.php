@@ -238,7 +238,7 @@ class ProductsController extends Controller
 
         $headers = array(
             "Content-type" => "text/xlsx",
-            "Content-Disposition" => "attachment; filename=Employees".$datetime.".xlsx",
+            "Content-Disposition" => "attachment; filename=Products".$datetime.".xlsx",
             "Pragma" => "no-cache",
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
             "Expires" => "0"

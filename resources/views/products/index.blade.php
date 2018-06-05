@@ -43,7 +43,7 @@
             <tr>
               <td>{{ $product->id }}</td>
               <td>{{ $product->name }}</td>
-              <td><span>&#8369; </span>{{ $product->price }}</td>
+              <td><span>&#8369; </span>{{ number_format($product->price, 2) }}</td>
               <td>{{ $product->stock }}</td>
               <td>{{ $product->category->name}}</td>
               <td>
@@ -117,7 +117,7 @@
 							      				<label class="col-form-label"><strong>Product name : </strong>{{ $product->name }}</label>
 							      			</div>
 							      			<div class="form-group">
-							      				<label class="col-form-label"><strong>Price : </strong><span>&#8369; </span>{{ $product->price }}</label>
+							      				<label class="col-form-label"><strong>Price : </strong><span>&#8369; </span>{{ number_format($product->price, 2) }}</label>
 							      			</div>
 							      			<div class="form-group">
 							      				<label class="col-form-label"><strong>Stock : </strong>{{ $product->stock }}</label>
@@ -249,7 +249,7 @@
 	            <tr>
 	              <td>{{ $product->id }}</td>
 	              <td>{{ $product->name }}</td>
-	              <td>{{ $product->price }}</td>
+	              <td>{{ number_format($product->price, 2) }}</td>
 	              <td>{{ $product->stock }}</td>	
 	              <td>
 	              		<a class="btn btn-success" href="{{ route('restore', ['id' => $product->id]) }}"><i class="fa fa-chevron-down"></i> Restore</a> &nbsp;

@@ -20,6 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->decimal('total_amount',8,2);
             $table->string('status');
             $table->softDeletes();
+            $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });
     }

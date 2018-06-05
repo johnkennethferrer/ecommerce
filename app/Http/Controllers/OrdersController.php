@@ -9,6 +9,7 @@ use DB;
 use App\Product;
 use Mail;
 use App\User;
+use Carbon\Carbon;
 
 class OrdersController extends Controller
 {
@@ -126,10 +127,16 @@ class OrdersController extends Controller
 
     public function deliverOrder($id) {
 
+        $now = Carbon::now('Asia/Manila');
+        $datetime = $now->toDateTimeString();
+        $date = $now->toDateString();
+        $time = $now->toTimeString();
+
     	//update the status of order
 		$updateStatus = Transaction::where('id', $id)
 								->update([
-									'status' => "Completed"
+									'status' => "Completed",
+                                    'completed_at' => $datetime
 								]);
         if ($updateStatus) {
             return back()->with('success',"Order #$id is successfully delivered.");
@@ -187,10 +194,10 @@ class OrdersController extends Controller
     public function sendEmail() {
         $email = "kenneth.ferrerskie30@gmail.com";
         $anything = "hello";
-        $text = "Hi";
+        $text = "Click the link to verify your account ( http://127.0.0.1:8000/shop ).";
 
         Mail::raw($text, function($message) use($email, $anything) {
-            $message->to($email, 'Test')
+            $message->to($email, $anything)
                     ->subject('Ecommerce | Logic8 Business Solution Corporation');
             $message->from('johnkenneth3010@gmail.com', 'John Kenneth Ferrer');
         });
