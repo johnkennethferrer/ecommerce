@@ -14,8 +14,30 @@ class CategoryTableSeeder extends Seeder
     {
         //
         $category = new Category([
-        	'name' => '',
-        	'description' => '',
+        	'name' => 'Accessories',
+        	'description' => 'Accessories',
+            'user_id' => "1"
+        ]);
+        $category->save();
+
+        $category = new Category([
+            'name' => 'Bags',
+            'description' => 'Bags',
+            'user_id' => "1"
+        ]);
+        $category->save();
+
+        $category = new Category([
+            'name' => 'Cellphones',
+            'description' => 'Cellphones',
+            'user_id' => "1"
+        ]);
+        $category->save();
+
+        $category = new Category([
+            'name' => 'Laptops',
+            'description' => 'Laptops',
+            'user_id' => "1"
         ]);
         $category->save();
     }

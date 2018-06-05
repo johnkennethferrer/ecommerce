@@ -64,11 +64,11 @@
                     @foreach($products as $product)
                         <a data-toggle="modal" data-target=".view_details{{$product->id}}" style="cursor: pointer;">
                         <div class="col-md-4 mb-4">
-                            <div class="card" style="width: 100%;">
+                            <div class="card" style="width: 100%; height:370px;">
                                 @if($product->image == null)
-                                <img class="card-img-top image-responsive" src="{{ asset('storage/no_image.png') }}" alt="No image">
+                                <img class="card-img-top image-responsive" src="{{ asset('storage/no_image.png') }}" alt="No image" style="height:200px;">
                                 @else
-                                <img class="card-img-top image-responsive" src="{{ asset('storage/') }}/{{ $product->image }}">
+                                <img class="card-img-top image-responsive" src="{{ asset('storage/') }}/{{ $product->image }}" style="height:200px;">
                                 @endif
                               <div class="card-body">
                                 <h5 class="card-title text-center"><strong>{{ $product->name }}</strong></h5>
