@@ -22,3 +22,9 @@ $("#send-email").click(function() {
 	$("#loader").removeAttr('hidden');
 	$('.main').css({ "opacity" : "0.5" });
 });
+
+$("#register-customer").click(function() {
+	$("#loader").removeAttr('hidden');
+	$('.container').css({ "opacity" : "0.5" });
+});
+

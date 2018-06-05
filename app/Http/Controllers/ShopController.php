@@ -59,23 +59,41 @@ class ShopController extends Controller
             'role_id' => 2,
         ]);
 
-        Auth::login($user);
+        $customerlastinsertId = DB::getPdo()->lastInsertId();
 
-        // if (Session::has('oldUrl')) {
-        //     $oldUrl = Session::get('oldUrl');
-        //     Session::forget('oldUrl');
-        //     return redirect()->to($oldUrl);
-        // }
+        $email = $request['email'];
+        $anything = "Verifaction Code";
+        $text = "Click the link to verify your account ( http://127.0.0.1:8000/user/verifyaccount/$customerlastinsertId ).";
 
-        return redirect()->route('shop.index');
+        Mail::raw($text, function($message) use($email, $anything) {
+            $message->to($email, $anything)
+                    ->subject('Ecommerce | Logic8 Business Solution Corporation');
+            $message->from('johnkenneth3010@gmail.com', 'John Kenneth Ferrer');
+        });
+
+        
+        return view('shop.verifyyouraccount');
     } 
 
     public function verifyAccount($id)
-    {
+    {  
+        $verified = User::find($id);
+        $verified->status = "1";
+        $verified->save();
 
-        Auth::login($user);
-        return redirect()->route('shop.index');
+        if ($verified) {
+            $user = User::find($id);
+            Auth::login($user);
+            return redirect()->route('shop.index');
+        }
+        return "failed";
+        
     } 
+
+    public function indicatorVerify()
+    {
+        return view('shop.indicatorverify'); 
+    }
 
     public function customerLogin()
     {
@@ -346,7 +364,7 @@ class ShopController extends Controller
             
             $userId = Auth::user()->id;
             $user = User::find($userId);
-            $user->password = Hash::make($request['password']);;
+            $user->password = Hash::make($request['password']);
             $user->save();
 
             if ($user) {

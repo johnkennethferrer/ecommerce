@@ -159,11 +159,6 @@ Route::get('printreporttoday', [
 
 ///////////////////////////////////////////////////////////////
 // shop
-Route::get('/verifyyouraccount/{$id}', [
-	'uses' => 'ShopController@verifyAccount',
-	'as' => 'verifyyouraccount'
-]);
-
 Route::get('/add-to-cart/{id}', [
 	'uses' => 'ShopController@getAddToCart',
 	'as' => 'product.addToCart'
@@ -225,6 +220,11 @@ Route::post('customerchangepassword', [
 	'as' => 'customerchangepassword'
 ]);
 
+Route::get('indicatorverify', [
+	'uses' => 'ShopController@indicatorVerify',
+	'as' => 'indicatorverify'
+]);
+
 Route::group(['prefix' => 'user'], function() {
 
 	Route::group(['middleware' => 'guest'], function() {
@@ -247,6 +247,11 @@ Route::group(['prefix' => 'user'], function() {
 		Route::post('/customer_signin', [
 			'uses' => 'ShopController@customerSignin',
 			'as' => 'user.customer_signin',
+		]);
+
+		Route::get('/verifyaccount/{id}', [
+			'uses' => 'ShopController@verifyAccount',
+			'as' => 'user.verifyaccount'
 		]);
 
 	});

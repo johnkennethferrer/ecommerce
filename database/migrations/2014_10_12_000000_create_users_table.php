@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('contact_no');
             $table->longText('address')->nullable();
             $table->integer('role_id');
+            $table->integer('status')->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
