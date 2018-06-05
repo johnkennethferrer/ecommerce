@@ -63,7 +63,7 @@
 							@foreach($carts as $cart)
 								<tr>
 									<td>{{ $cart['item']['name']}}</td>
-									<td><span>&#8369; </span> {{ $cart['item']['price'] }}</td>
+									<td><span>&#8369; </span> {{ number_format($cart['item']['price'], 2) }}</td>
 									<td>{{ $cart['qty'] }}</td>
 									<td><span>&#8369; </span> {{ number_format($cart['item']['price'] * $cart['qty'], 2) }}</td>
 								</tr>

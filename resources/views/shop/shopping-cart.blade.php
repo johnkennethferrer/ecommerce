@@ -36,7 +36,7 @@
 		                           	</td>
 		                           	<td><h5>{{ $product['item']['name'] }}</h5></td>
 	                           		<td>
-	                           			<h3><span class="badge badge-info"><span>&#8369; </span>{{ $product['item']['price'] }}</span></h3>
+	                           			<h3><span class="badge badge-info"><span>&#8369; </span>{{ number_format($product['item']['price'], 2) }}</span></h3>
 	                           		</td>	
 		                           	<td><h4>
 			                           		<a href="{{ route('product.reduceByOne', ['id' => $product['item']['id']] )}}" class="btn btn-danger"><i class="fa fa-minus"></i></a>

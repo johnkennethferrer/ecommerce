@@ -28,3 +28,12 @@ $("#register-customer").click(function() {
 	$('.container').css({ "opacity" : "0.5" });
 });
 
+$('input[name=date_from]').change(function() {
+	var datefrom = $('input[name=date_from]').val();
+	var dateto = $('input[name=date_to]').val();
+
+
+	$('input[name=date_to]').attr({
+		"min" : datefrom
+	});
+});

@@ -38,7 +38,7 @@
 			                                @endif
 										</td>
 										<td>{{ $order->name }}</td>
-										<td><span>&#8369; </span> {{ $order->price }}</td>
+										<td><span>&#8369; </span> {{ number_format($order->price, 2) }}</td>
 										<td>{{ $order->quantity }}</td>
 										<td><span>&#8369; </span> {{ number_format($order->price * $order->quantity, 2) }}</td>
 									</tr>
