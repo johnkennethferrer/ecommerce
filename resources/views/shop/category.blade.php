@@ -72,7 +72,7 @@
                                 @endif
                               <div class="card-body">
                                 <h5 class="card-title text-center"><strong>{{ $product->name }}</strong></h5>
-                                <p class="card-text text-center"><span>&#8369; </span>{{ $product->price }}</p>
+                                <p class="card-text text-center"><span>&#8369; </span>{{ number_format($product->price, 2) }}</p>
                                 <hr>
                                 <a href="{{ route('product.addToCart', ['id' => $product->id])}}" class="btn btn-success form-control"><i class="fa fa-plus"></i> Add to cart</a>
                               </div>
@@ -113,7 +113,7 @@
                                         <label class="col-form-label"><strong>Product name : </strong>{{ $product->name }}</label>
                                       </div>
                                       <div class="form-group">
-                                        <label class="col-form-label"><strong>Price : </strong><span>&#8369; </span>{{ $product->price }}</label>
+                                        <label class="col-form-label"><strong>Price : </strong><span>&#8369; </span>{{ number_format($product->price, 2) }}</label>
                                       </div>
                                       <div class="form-group">
                                         <label class="col-form-label"><strong>Stock : </strong>{{ $product->stock }}</label>
