@@ -19,11 +19,7 @@ use Mail;
 
 class ShopController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
@@ -69,7 +65,7 @@ class ShopController extends Controller
         Mail::raw($text, function($message) use($email, $anything) {
             $message->to($email, $anything)
                     ->subject('Ecommerce | Logic8 Business Solution Corporation');
-            $message->from('johnkenneth3010@gmail.com', 'John Kenneth Ferrer');
+            $message->from('johnkenneth3010@gmail.com', 'Ecommerce | Administrator');
         });
 
         

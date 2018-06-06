@@ -10,7 +10,11 @@ use User;
 use Carbon\Carbon;
 
 class ReportsController extends Controller
-{
+{	
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
 	public function getIndex() {
 

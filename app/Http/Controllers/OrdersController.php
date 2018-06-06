@@ -13,6 +13,11 @@ use Carbon\Carbon;
 
 class OrdersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function getIndex() {
 
     	if (Auth::user()->role_id == 1) {
